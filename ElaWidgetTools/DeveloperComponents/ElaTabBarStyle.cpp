@@ -180,7 +180,7 @@ QSize ElaTabBarStyle::sizeFromContents(ContentsType type, const QStyleOption* op
     {
     case CT_TabBarTab:
     {
-        return QSize(220, 35);
+        return QSize(160, 35);
     }
     default:
     {
