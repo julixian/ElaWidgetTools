@@ -39,7 +39,6 @@
 #include "ExamplePage/T_Navigation.h"
 #include "ExamplePage/T_Popup.h"
 #include "ExamplePage/T_UpdateWidget.h"
-
 MainWindow::MainWindow(QWidget* parent)
     : ElaWindow(parent)
 {
@@ -104,6 +103,13 @@ void MainWindow::initWindow()
     centralStack->setTextPixelSize(32);
     centralStack->setAlignment(Qt::AlignCenter);
     addCentralWidget(centralStack);
+
+    // 窗口绘制模式
+    setWindowPixmap(ElaThemeType::Light, QPixmap(":/Resource/Image/WindowBase/Miku.png"));
+    setWindowPixmap(ElaThemeType::Dark, QPixmap(":/Resource/Image/WindowBase/WorldTree.jpg"));
+    setWindowMoviePath(ElaThemeType::Light, ":/Resource/Image/WindowBase/Miku.gif");
+    setWindowMoviePath(ElaThemeType::Dark, ":/Resource/Image/WindowBase/WorldTree.gif");
+    //setWindowPaintMode(ElaWindowType::PaintMode::Pixmap);
 
     // 自定义AppBar菜单
     ElaMenu* appBarMenu = new ElaMenu(this);
@@ -170,11 +176,15 @@ void MainWindow::initWindow()
         }
         }
     });
-    ElaSuggestBox* centralStackSuggest = new ElaSuggestBox(this);
-    centralStackSuggest->setFixedHeight(32);
-    centralStackSuggest->setPlaceholderText("搜索关键字");
+    _windowSuggestBox = new ElaSuggestBox(this);
+    _windowSuggestBox->setFixedHeight(32);
+    _windowSuggestBox->setPlaceholderText("搜索关键字");
+    connect(_windowSuggestBox, &ElaSuggestBox::suggestionClicked, this, [=](const ElaSuggestBox::SuggestData& suggestData) {
+        navigation(suggestData.getSuggestData().value("ElaPageKey").toString());
+    });
 
     ElaText* progressBusyRingText = new ElaText("系统运行中", this);
+    progressBusyRingText->setIsWrapAnywhere(false);
     progressBusyRingText->setTextPixelSize(15);
 
     ElaProgressRing* progressBusyRing = new ElaProgressRing(this);
@@ -184,7 +194,7 @@ void MainWindow::initWindow()
 
     centralCustomWidgetLayout->addWidget(leftButton);
     centralCustomWidgetLayout->addWidget(rightButton);
-    centralCustomWidgetLayout->addWidget(centralStackSuggest);
+    centralCustomWidgetLayout->addWidget(_windowSuggestBox);
     centralCustomWidgetLayout->addStretch();
     centralCustomWidgetLayout->addWidget(progressBusyRingText);
     centralCustomWidgetLayout->addWidget(progressBusyRing);
@@ -197,13 +207,13 @@ void MainWindow::initEdgeLayout()
     ElaMenuBar* menuBar = new ElaMenuBar(this);
     menuBar->setFixedHeight(30);
     QWidget* customWidget = new QWidget(this);
+    customWidget->setFixedWidth(500);
     QVBoxLayout* customLayout = new QVBoxLayout(customWidget);
     customLayout->setContentsMargins(0, 0, 0, 0);
     customLayout->addWidget(menuBar);
     customLayout->addStretch();
     // this->setMenuBar(menuBar);
     this->setCustomWidget(ElaAppBarType::MiddleArea, customWidget);
-    this->setCustomWidgetMaximumWidth(500);
 
     menuBar->addElaIconAction(ElaIconType::AtomSimple, "动作菜单");
     ElaMenu* iconMenu = menuBar->addMenu(ElaIconType::Aperture, "图标菜单");
@@ -346,21 +356,16 @@ void MainWindow::initContent()
     addPageNode("ElaNavigation", _navigationPage, ElaIconType::LocationArrow);
     addPageNode("ElaPopup", _popupPage, ElaIconType::Envelope);
     addPageNode("ElaIcon", _iconPage, 99, ElaIconType::FontCase);
-    addExpanderNode("TEST4", testKey_2, ElaIconType::Acorn);
-    addExpanderNode("TEST5", testKey_1, testKey_2, ElaIconType::Acorn);
-    addPageNode("Third Level", new QWidget(this), testKey_1, ElaIconType::Acorn);
-    addExpanderNode("TEST6", testKey_1, testKey_2, ElaIconType::Acorn);
-    addExpanderNode("TEST7", testKey_1, testKey_2, ElaIconType::Acorn);
-    addExpanderNode("TEST8", testKey_1, testKey_2, ElaIconType::Acorn);
-    addExpanderNode("TEST9", testKey_1, testKey_2, ElaIconType::Acorn);
-    addExpanderNode("TEST10", testKey_1, testKey_2, ElaIconType::Acorn);
-    addExpanderNode("TEST11", testKey_1, testKey_2, ElaIconType::Acorn);
-    addExpanderNode("TEST12", testKey_1, testKey_2, ElaIconType::Acorn);
-    addExpanderNode("TEST13", testKey_1, testKey_2, ElaIconType::Acorn);
-    addExpanderNode("TEST14", testKey_1, testKey_2, ElaIconType::Acorn);
-    addExpanderNode("TEST15", testKey_1, ElaIconType::Acorn);
-    addExpanderNode("TEST16", testKey_1, ElaIconType::Acorn);
-    addExpanderNode("TEST17", testKey_1, ElaIconType::Acorn);
+    addExpanderNode("TEST_EXPAND_NODE1", testKey_1, ElaIconType::Acorn);
+    addExpanderNode("TEST_EXPAND_NODE2", testKey_2, testKey_1, ElaIconType::Acorn);
+    addPageNode("TEST_NODE3", new QWidget(this), testKey_2, ElaIconType::Acorn);
+    for (int i = 0; i < 10; i++)
+    {
+        addExpanderNode(QString("TEST_EXPAND_NODE%1").arg(i + 4), testKey_1, testKey_2, ElaIconType::Acorn);
+    }
+    addExpanderNode("TEST_EXPAND_NODE14", testKey_1, ElaIconType::Acorn);
+    addExpanderNode("TEST_EXPAND_NODE5", testKey_1, ElaIconType::Acorn);
+    addExpanderNode("TEST_EXPAND_NODE16", testKey_1, ElaIconType::Acorn);
 
     addFooterNode("About", nullptr, _aboutKey, 0, ElaIconType::User);
     _aboutPage = new T_About();
@@ -394,6 +399,8 @@ void MainWindow::initContent()
     connect(_homePage, &T_Home::elaCardNavigation, this, [=]() {
         this->navigation(_cardPage->property("ElaPageKey").toString());
     });
+
+    _windowSuggestBox->addSuggestion(getNavigationSuggestDataList());
     qDebug() << "已注册的事件列表" << ElaEventBus::getInstance()->getRegisteredEventsName();
 }
 
