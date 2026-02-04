@@ -127,15 +127,6 @@ void ElaWindowPrivate::onThemeReadyChange()
                 eTheme->setThemeMode(ElaThemeType::Light);
             }
 
-            if (_pWindowPaintMode == ElaWindowType::PaintMode::Movie)
-            {
-                if (_windowPaintMovie->state() == QMovie::Running)
-                {
-                    _windowPaintMovie->stop();
-                }
-                _windowPaintMovie->setFileName(_themeMode == ElaThemeType::Light ? _lightWindowMoviePath : _darkWindowMoviePath);
-                _windowPaintMovie->start();
-            }
             _animationWidget->setCenter(centerPos);
             qreal topLeftDis = _distance(centerPos, QPoint(0, 0));
             qreal topRightDis = _distance(centerPos, QPoint(q->width(), 0));
@@ -164,38 +155,19 @@ void ElaWindowPrivate::onThemeReadyChange()
     }
 }
 
-void ElaWindowPrivate::onDisplayModeChanged()
-{
-    _currentNavigationBarDisplayMode = _pNavigationBarDisplayMode;
-    switch (_pNavigationBarDisplayMode)
-    {
-    case ElaNavigationType::Auto:
-    {
-        _doNavigationDisplayModeChange();
-        break;
-    }
-    case ElaNavigationType::Minimal:
-    {
-        _navigationBar->setDisplayMode(ElaNavigationType::Minimal, true);
-        break;
-    }
-    case ElaNavigationType::Compact:
-    {
-        _navigationBar->setDisplayMode(ElaNavigationType::Compact, true);
-        break;
-    }
-    case ElaNavigationType::Maximal:
-    {
-        _navigationBar->setDisplayMode(ElaNavigationType::Maximal, true);
-        break;
-    }
-    }
-}
-
 void ElaWindowPrivate::onThemeModeChanged(ElaThemeType::ThemeMode themeMode)
 {
     Q_Q(ElaWindow);
     _themeMode = themeMode;
+    if (_pWindowPaintMode == ElaWindowType::PaintMode::Movie)
+    {
+        if (_windowPaintMovie->state() == QMovie::Running)
+        {
+            _windowPaintMovie->stop();
+        }
+        _windowPaintMovie->setFileName(_themeMode == ElaThemeType::Light ? _lightWindowMoviePath : _darkWindowMoviePath);
+        _windowPaintMovie->start();
+    }
     q->update();
 }
 
@@ -234,18 +206,14 @@ void ElaWindowPrivate::onNavigationNodeClicked(ElaNavigationType::NavigationNode
 
 void ElaWindowPrivate::onNavigationNodeAdded(ElaNavigationType::NavigationNodeType nodeType, QString nodeKey, QWidget* page)
 {
-    if (nodeType == ElaNavigationType::PageNode)
+    if (nodeType == ElaNavigationType::CategoryNode)
     {
-        _routeMap.insert(nodeKey, page);
-        _navigationCenterStackedWidget->getContainerStackedWidget()->addWidget(page);
+        return;
     }
-    else
+    _routeMap.insert(nodeKey, page);
+    if (page)
     {
-        _routeMap.insert(nodeKey, page);
-        if (page)
-        {
-            _navigationCenterStackedWidget->getContainerStackedWidget()->addWidget(page);
-        }
+        _navigationCenterStackedWidget->getContainerStackedWidget()->addWidget(page);
     }
 }
 
