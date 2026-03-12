@@ -21,7 +21,6 @@ ElaNavigationNode::ElaNavigationNode(const QString& nodeTitle, ElaNavigationNode
 
 ElaNavigationNode::~ElaNavigationNode()
 {
-    qDeleteAll(_pChildrenNodes);
 }
 
 QString ElaNavigationNode::getNodeKey() const
