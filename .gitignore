@@ -61,3 +61,5 @@ compile_commands.json
 # Visual Studio
 .vs/
 out/
+CMakePresets.json
+CMakeUserPresets.json
