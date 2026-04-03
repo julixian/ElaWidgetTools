@@ -190,8 +190,7 @@ bool ElaAppBarPrivate::_containsCursorToItem(QWidget* item)
     {
         return false;
     }
-    auto point = item->window()->mapFromGlobal(QCursor::pos());
-    QRectF rect = QRectF(item->mapTo(item->window(), QPoint(0, 0)), item->size());
+    QRect itemRect = QRect(item->mapToGlobal(QPoint(0, 0)), item->size());
     if (item == q)
     {
         for (int i = 0; i < _clientWidgetList.count(); i++)
@@ -213,18 +212,15 @@ bool ElaAppBarPrivate::_containsCursorToItem(QWidget* item)
                     QMetaObject::invokeMethod(customAreaHitTestObject, _customAreaHitTestFunctionNameList[i].toLocal8Bit().constData(), Qt::AutoConnection, Q_RETURN_ARG(bool, isContainsInAppBar));
                     return isContainsInAppBar;
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
         }
     }
     else if (item == _maxButton)
     {
-        rect.adjust(0, 8, 0, 0);
+        itemRect.adjust(0, 8, 0, 0);
     }
-    if (rect.contains(point))
+    if (itemRect.contains(QCursor::pos()))
     {
         return true;
     }
