@@ -60,7 +60,7 @@ void ElaTabBarStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption* opt,
         iconFont.setPixelSize(16);
         p->setFont(iconFont);
         p->setPen(ElaThemeColor(_themeMode, BasicText));
-        p->drawText(opt->rect, Qt::AlignCenter, QChar(ElaIconType::Xmark));
+        p->drawText(opt->rect, Qt::AlignCenter, QChar((unsigned short)ElaIconType::Xmark));
         p->restore();
         return;
     }
@@ -190,7 +190,20 @@ QSize ElaTabBarStyle::sizeFromContents(ContentsType type, const QStyleOption* op
     {
     case CT_TabBarTab:
     {
-        return _pTabSize;
+        QSize tabSize = _pTabSize;
+        if (const QStyleOptionTab* topt = qstyleoption_cast<const QStyleOptionTab*>(option))
+        {
+            int contentWidth = topt->fontMetrics.horizontalAdvance(topt->text) + 70;
+            if (!topt->icon.isNull())
+            {
+                contentWidth += topt->iconSize.width() + 8;
+            }
+            if (contentWidth > tabSize.width())
+            {
+                tabSize.setWidth(contentWidth);
+            }
+        }
+        return tabSize;
     }
     default:
     {

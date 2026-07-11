@@ -339,7 +339,7 @@ void ElaMessageBarPrivate::_drawSuccess(QPainter* painter)
     QFont iconFont = QFont("ElaAwesome");
     iconFont.setPixelSize(12);
     painter->setFont(iconFont);
-    painter->drawText(_leftPadding, 0, q->width(), q->height(), Qt::AlignVCenter, QChar(ElaIconType::Check));
+    painter->drawText(_leftPadding, 0, q->width(), q->height(), Qt::AlignVCenter, QChar((unsigned short)ElaIconType::Check));
     // 时间进度条绘制
     QPainterPath clipPath;
     clipPath.addRoundedRect(foregroundRect, _borderRadius, _borderRadius);
@@ -421,7 +421,7 @@ void ElaMessageBarPrivate::_drawError(QPainter* painter)
     QFont iconFont = QFont("ElaAwesome");
     iconFont.setPixelSize(13);
     painter->setFont(iconFont);
-    painter->drawText(_leftPadding + 1, 0, q->width(), q->height(), Qt::AlignVCenter, QChar(ElaIconType::Xmark));
+    painter->drawText(_leftPadding + 1, 0, q->width(), q->height(), Qt::AlignVCenter, QChar((unsigned short)ElaIconType::Xmark));
     // 时间进度条绘制
     QPainterPath clipPath;
     clipPath.addRoundedRect(foregroundRect, _borderRadius, _borderRadius);

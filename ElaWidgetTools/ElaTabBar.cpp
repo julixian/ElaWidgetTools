@@ -65,7 +65,7 @@ void ElaTabBar::mouseMoveEvent(QMouseEvent* event)
                 d->_mimeData = new QMimeData();
                 d->_mimeData->setProperty("DragType", "ElaTabBarDrag");
                 d->_mimeData->setProperty("ElaTabBarObject", QVariant::fromValue(this));
-                d->_mimeData->setProperty("TabSize", d->_style->getTabSize());
+                d->_mimeData->setProperty("TabSize", tabRect(currentIndex()).size());
                 d->_mimeData->setProperty("IsFloatWidget", true);
                 QRect currentTabRect = tabRect(currentIndex());
                 d->_mimeData->setProperty("DragPos", QPoint(currentPos.x() - currentTabRect.x(), currentPos.y() - currentTabRect.y()));
@@ -108,7 +108,7 @@ void ElaTabBar::mouseMoveEvent(QMouseEvent* event)
                     d->_mimeData = new QMimeData();
                     d->_mimeData->setProperty("DragType", "ElaTabBarDrag");
                     d->_mimeData->setProperty("ElaTabBarObject", QVariant::fromValue(this));
-                    d->_mimeData->setProperty("TabSize", d->_style->getTabSize());
+                    d->_mimeData->setProperty("TabSize", tabRect(d->_tabBarPrivate->pressedIndex).size());
                     Q_EMIT tabDragCreate(d->_mimeData);
                     d->_mimeData = nullptr;
                 }
@@ -132,7 +132,8 @@ void ElaTabBar::dragEnterEvent(QDragEnterEvent* event)
 #endif
         Q_EMIT tabDragEnter(mimeData);
         qApp->processEvents();
-        QMouseEvent pressEvent(QEvent::MouseButtonPress, QPoint(tabRect(currentIndex()).x() + d->_style->getTabSize().width() / 2, 0), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+        QRect currentTabRect = tabRect(currentIndex());
+        QMouseEvent pressEvent(QEvent::MouseButtonPress, QPoint(currentTabRect.x() + currentTabRect.width() / 2, 0), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         QApplication::sendEvent(this, &pressEvent);
         QMouseEvent moveEvent(QEvent::MouseMove, QPoint(event->pos().x(), 0), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         QApplication::sendEvent(this, &moveEvent);
@@ -193,13 +194,18 @@ void ElaTabBar::paintEvent(QPaintEvent* event)
 {
     Q_D(ElaTabBar);
     QSize tabSize = d->_style->getTabSize();
+    int tabX = 0;
     for (int i = 0; i < d->_tabBarPrivate->tabList.size(); i++)
     {
+        QStyleOptionTab option;
+        initStyleOption(&option, i);
+        QSize currentTabSize = d->_style->sizeFromContents(QStyle::CT_TabBarTab, &option, tabSize, this);
 #if (QT_VERSION > QT_VERSION_CHECK(6, 0, 0))
-        d->_tabBarPrivate->tabList[i]->rect = QRect(tabSize.width() * i, d->_tabBarPrivate->tabList[i]->rect.y(), tabSize.width(), tabSize.height());
+        d->_tabBarPrivate->tabList[i]->rect = QRect(tabX, d->_tabBarPrivate->tabList[i]->rect.y(), currentTabSize.width(), tabSize.height());
 #else
-        d->_tabBarPrivate->tabList[i].rect = QRect(tabSize.width() * i, d->_tabBarPrivate->tabList[i].rect.y(), tabSize.width(), tabSize.height());
+        d->_tabBarPrivate->tabList[i].rect = QRect(tabX, d->_tabBarPrivate->tabList[i].rect.y(), currentTabSize.width(), tabSize.height());
 #endif
+        tabX += currentTabSize.width();
     }
     d->_tabBarPrivate->layoutWidgets();
     QTabBar::paintEvent(event);
