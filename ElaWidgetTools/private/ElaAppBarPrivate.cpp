@@ -8,6 +8,8 @@
 #include "ElaIconButton.h"
 #include "ElaNavigationBar.h"
 #include "ElaText.h"
+
+#include <QApplication>
 #include <QDebug>
 #include <QGuiApplication>
 #include <QLabel>
@@ -17,6 +19,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QWindow>
+#include <QtMath>
 
 ElaAppBarPrivate::ElaAppBarPrivate(QObject* parent)
     : QObject{parent}
@@ -48,7 +51,13 @@ void ElaAppBarPrivate::onCloseButtonClicked()
     Q_Q(ElaAppBar);
     if (_pIsDefaultClosed)
     {
-        q->window()->close();
+        const auto window = q->window();
+        window->close();
+        QApplication::processEvents();
+        if (const auto windowHandle = window->windowHandle())
+        {
+            windowHandle->close();
+        }
     }
     else
     {
@@ -89,7 +98,7 @@ void ElaAppBarPrivate::_changeMaxButtonAwesome(bool isMaximized)
     }
 }
 
-void ElaAppBarPrivate::_showAppBarMenu(QPoint point)
+void ElaAppBarPrivate::_showAppBarMenu(const QPoint& point)
 {
     Q_Q(const ElaAppBar);
     if (_pCustomMenu)
@@ -242,54 +251,35 @@ void ElaAppBarPrivate::_onThemeModeChange(ElaThemeType::ThemeMode themeMode)
 int ElaAppBarPrivate::_calculateMinimumWidth()
 {
     Q_Q(ElaAppBar);
-    int width = 0;
+    int appBarWidth = 0;
     if (_titleLabel->isVisible())
     {
-        width += _titleLabel->width();
-        width += 10;
+        appBarWidth += _titleLabel->width();
+        appBarWidth += 10;
     }
     if (_iconLabel->isVisible())
     {
-        width += _iconLabel->width();
-        width += 10;
+        appBarWidth += _iconLabel->width();
+        appBarWidth += 10;
     }
-    bool isHasNavigationBar = false;
-    if (q->parentWidget()->findChild<ElaNavigationBar*>())
-    {
-        isHasNavigationBar = true;
-        width += 305;
-    }
-    else
-    {
-        width += 5;
-    }
-
-    int customWidgetWidth = 0;
     for (int i = 0; i < _customAreaWidgetList.count(); i++)
     {
-        customWidgetWidth += _customAreaWidgetList[i]->minimumWidth();
-    }
-    if (isHasNavigationBar)
-    {
-        if (customWidgetWidth > 300)
+        auto customAreaWidget = _customAreaWidgetList[i];
+        if (customAreaWidget->isVisible())
         {
-            width += customWidgetWidth - 300;
+            appBarWidth += customAreaWidget->minimumWidth();
         }
     }
-    else
-    {
-        width += customWidgetWidth;
-    }
-
     QList<QAbstractButton*> buttonList = q->findChildren<QAbstractButton*>();
-    for (auto button: buttonList)
+    for (const auto clientWidget: _clientWidgetList)
     {
-        if (button->isVisible() && button->objectName() != "NavigationButton")
+        if (clientWidget->isVisible())
         {
-            width += button->width();
+            appBarWidth += clientWidget->minimumWidth();
         }
     }
-    return width;
+    auto windowMinWidth = q->parentWidget()->minimumWidth() + 20;
+    return qMax(appBarWidth, windowMinWidth);
 }
 
 QVBoxLayout* ElaAppBarPrivate::_createVLayout(QWidget* widget)

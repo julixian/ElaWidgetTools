@@ -366,19 +366,19 @@ void ElaWindow::setUserInfoCardVisible(bool isVisible)
     d->_navigationBar->setUserInfoCardVisible(isVisible);
 }
 
-void ElaWindow::setUserInfoCardPixmap(QPixmap pix)
+void ElaWindow::setUserInfoCardPixmap(const QPixmap& pix)
 {
     Q_D(ElaWindow);
     d->_navigationBar->setUserInfoCardPixmap(pix);
 }
 
-void ElaWindow::setUserInfoCardTitle(QString title)
+void ElaWindow::setUserInfoCardTitle(const QString& title)
 {
     Q_D(ElaWindow);
     d->_navigationBar->setUserInfoCardTitle(title);
 }
 
-void ElaWindow::setUserInfoCardSubTitle(QString subTitle)
+void ElaWindow::setUserInfoCardSubTitle(const QString& subTitle)
 {
     Q_D(ElaWindow);
     d->_navigationBar->setUserInfoCardSubTitle(subTitle);
@@ -489,37 +489,37 @@ QWidget* ElaWindow::getCentralWidget(int index) const
     return d->_centerStackedWidget->getContainerStackedWidget()->widget(index);
 }
 
-bool ElaWindow::getNavigationNodeIsExpanded(QString expanderKey) const
+bool ElaWindow::getNavigationNodeIsExpanded(const QString& expanderKey) const
 {
     Q_D(const ElaWindow);
     return d->_navigationBar->getNodeIsExpanded(expanderKey);
 }
 
-void ElaWindow::expandNavigationNode(QString expanderKey)
+void ElaWindow::expandNavigationNode(const QString& expanderKey)
 {
     Q_D(ElaWindow);
     d->_navigationBar->expandNode(expanderKey);
 }
 
-void ElaWindow::collapseNavigationNode(QString expanderKey)
+void ElaWindow::collapseNavigationNode(const QString& expanderKey)
 {
     Q_D(ElaWindow);
     d->_navigationBar->collapseNode(expanderKey);
 }
 
-void ElaWindow::removeNavigationNode(QString nodeKey) const
+void ElaWindow::removeNavigationNode(const QString& nodeKey) const
 {
     Q_D(const ElaWindow);
     d->_navigationBar->removeNode(nodeKey);
 }
 
-int ElaWindow::getPageOpenInNewWindowCount(QString nodeKey) const
+int ElaWindow::getPageOpenInNewWindowCount(const QString& nodeKey) const
 {
     Q_D(const ElaWindow);
     return d->_navigationBar->getPageOpenInNewWindowCount(nodeKey);
 }
 
-void ElaWindow::backtrackNavigationNode(QString nodeKey)
+void ElaWindow::backtrackNavigationNode(const QString& nodeKey)
 {
     Q_D(ElaWindow);
     const QMetaObject* meta = d->_pageMetaMap.value(nodeKey);
@@ -542,31 +542,31 @@ void ElaWindow::backtrackNavigationNode(QString nodeKey)
     }
 }
 
-void ElaWindow::setNodeKeyPoints(QString nodeKey, int keyPoints)
+void ElaWindow::setNodeKeyPoints(const QString& nodeKey, int keyPoints)
 {
     Q_D(ElaWindow);
     d->_navigationBar->setNodeKeyPoints(nodeKey, keyPoints);
 }
 
-int ElaWindow::getNodeKeyPoints(QString nodeKey) const
+int ElaWindow::getNodeKeyPoints(const QString& nodeKey) const
 {
     Q_D(const ElaWindow);
     return d->_navigationBar->getNodeKeyPoints(nodeKey);
 }
 
-void ElaWindow::setNavigationNodeTitle(QString nodeKey, QString nodeTitle)
+void ElaWindow::setNavigationNodeTitle(const QString& nodeKey, const QString& nodeTitle)
 {
     Q_D(ElaWindow);
     d->_navigationBar->setNodeTitle(nodeKey, nodeTitle);
 }
 
-QString ElaWindow::getNavigationNodeTitle(QString nodeKey) const
+QString ElaWindow::getNavigationNodeTitle(const QString& nodeKey) const
 {
     Q_D(const ElaWindow);
     return d->_navigationBar->getNodeTitle(nodeKey);
 }
 
-void ElaWindow::navigation(QString pageKey)
+void ElaWindow::navigation(const QString& pageKey)
 {
     Q_D(ElaWindow);
     d->_navigationBar->navigation(pageKey);
@@ -584,7 +584,7 @@ QString ElaWindow::getCurrentNavigationPageKey() const
     return d->_navigationCenterStackedWidget->getContainerStackedWidget()->currentWidget()->property("ElaPageKey").toString();
 }
 
-QList<ElaSuggestBox::SuggestData> ElaWindow::getNavigationSuggestDataList() const
+const QList<ElaSuggestBox::SuggestData>& ElaWindow::getNavigationSuggestDataList() const
 {
     Q_D(const ElaWindow);
     return d->_navigationBar->getSuggestDataList();
@@ -647,6 +647,34 @@ qreal ElaWindow::getWindowMovieRate() const
     return d->_windowPaintMovie->speed() / 100.0;
 }
 
+void ElaWindow::tabifyDockWidget(QDockWidget* targetDockWidget, QDockWidget* dockWidget)
+{
+    QMainWindow::tabifyDockWidget(targetDockWidget, dockWidget);
+}
+
+void ElaWindow::tabifyDockWidget(Qt::DockWidgetArea area, const QString& targetDockTitle, QDockWidget* dockWidget)
+{
+    if (!dockWidget)
+    {
+        return;
+    }
+    auto dockWidgetList = findChildren<QDockWidget*>();
+    for (const auto otherDock: dockWidgetList)
+    {
+        if (otherDock == dockWidget)
+        {
+            continue;
+        }
+        if (dockWidgetArea(otherDock) == area && otherDock->windowTitle() == targetDockTitle)
+        {
+            tabifyDockWidget(otherDock, dockWidget);
+            return;
+        }
+    }
+    // 未找到 按Area添加
+    addDockWidget(area, dockWidget);
+}
+
 void ElaWindow::setWindowPixmap(ElaThemeType::ThemeMode themeMode, const QPixmap& pixmap)
 {
     Q_D(ElaWindow);
@@ -665,13 +693,6 @@ QPixmap ElaWindow::getWindowPixmap(ElaThemeType::ThemeMode themeMode) const
 {
     Q_D(const ElaWindow);
     return themeMode == ElaThemeType::Light ? *d->_lightWindowPix : *d->_darkWindowPix;
-}
-
-void ElaWindow::closeWindow()
-{
-    Q_D(ElaWindow);
-    d->_isWindowClosing = true;
-    d->_appBar->closeWindow();
 }
 
 bool ElaWindow::eventFilter(QObject* watched, QEvent* event)
@@ -802,4 +823,14 @@ void ElaWindow::paintEvent(QPaintEvent* event)
     }
     }
     painter.restore();
+}
+
+QWidget* ElaWindow::centralWidget() const
+{
+    return QMainWindow::centralWidget();
+}
+
+void ElaWindow::setCentralWidget(QWidget* widget)
+{
+    QMainWindow::setCentralWidget(widget);
 }

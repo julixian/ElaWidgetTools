@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.5)
+﻿cmake_minimum_required(VERSION 3.12)
 cmake_policy(SET CMP0087 NEW)
 project(ElaWidgetToolsExample VERSION 0.1 LANGUAGES CXX)
 
@@ -45,26 +45,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 
-if (WIN32)
-    target_include_directories(${PROJECT_NAME} PUBLIC
-        ExamplePage
-        ModelView
-    )
-    target_link_libraries(${PROJECT_NAME} PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widgets
-        ElaWidgetTools
-    )
-
-else ()
-    target_include_directories(${PROJECT_NAME} PUBLIC
-        ExamplePage
-        ModelView
-    )
-    target_link_libraries(${PROJECT_NAME} PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widgets
-        ElaWidgetTools
-    )
-endif ()
+target_include_directories(${PROJECT_NAME} PUBLIC
+    ExamplePage
+    ModelView
+)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Ela::WidgetTools
+)
 
 if (${QT_VERSION} VERSION_LESS 6.1.0)
     set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.${PROJECT_NAME})
@@ -85,6 +73,11 @@ endif ()
 
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}
+)
+
+install(TARGETS ElaWidgetTools
     LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}
     RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}
 )

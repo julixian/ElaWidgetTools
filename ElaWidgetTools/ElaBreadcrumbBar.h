@@ -14,9 +14,9 @@ class ELA_EXPORT ElaBreadcrumbBar : public QWidget
 public:
     explicit ElaBreadcrumbBar(QWidget* parent = nullptr);
     ~ElaBreadcrumbBar() override;
-    void setBreadcrumbList(QStringList breadcrumbList);
-    QStringList appendBreadcrumb(QString breadcrumb);
-    QStringList removeBreadcrumb(QString breadcrumb);
+    void setBreadcrumbList(const QStringList& breadcrumbList);
+    QStringList appendBreadcrumb(const QString& breadcrumb);
+    QStringList removeBreadcrumb(const QString& breadcrumb);
 
     int getBreadcrumbListCount() const;
     QStringList getBreadcrumbList() const;

@@ -102,20 +102,20 @@ int ElaBreadcrumbBar::getTextPixelSize() const
     return d->_pTextPixelSize;
 }
 
-void ElaBreadcrumbBar::setBreadcrumbList(QStringList breadcrumbList)
+void ElaBreadcrumbBar::setBreadcrumbList(const QStringList& breadcrumbList)
 {
     Q_D(ElaBreadcrumbBar);
     d->_listModel->setBreadcrumbList(breadcrumbList);
 }
 
-QStringList ElaBreadcrumbBar::appendBreadcrumb(QString breadcrumb)
+QStringList ElaBreadcrumbBar::appendBreadcrumb(const QString& breadcrumb)
 {
     Q_D(ElaBreadcrumbBar);
     d->_listModel->appendBreadcrumb(breadcrumb);
     return d->_listModel->getBreadcrumbList();
 }
 
-QStringList ElaBreadcrumbBar::removeBreadcrumb(QString breadcrumb)
+QStringList ElaBreadcrumbBar::removeBreadcrumb(const QString& breadcrumb)
 {
     Q_D(ElaBreadcrumbBar);
     d->_listModel->removeBreadcrumb(breadcrumb);

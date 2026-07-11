@@ -18,7 +18,6 @@
 #include "T_About.h"
 #include "T_BaseComponents.h"
 #include "T_Card.h"
-#include "T_Graphics.h"
 #include "T_ListView.h"
 #include "T_Setting.h"
 #include "T_TableView.h"
@@ -52,7 +51,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     // 拦截默认关闭事件
     _closeDialog = new ElaContentDialog(this);
-    connect(_closeDialog, &ElaContentDialog::rightButtonClicked, this, &MainWindow::closeWindow);
+    connect(_closeDialog, &ElaContentDialog::rightButtonClicked, this, &MainWindow::close);
     connect(_closeDialog, &ElaContentDialog::middleButtonClicked, this, [=]() {
         _closeDialog->close();
         showMinimized();
@@ -330,7 +329,6 @@ void MainWindow::initContent()
 #endif
     _iconPage = new T_Icon(this);
     _baseComponentsPage = new T_BaseComponents(this);
-    _graphicsPage = new T_Graphics(this);
     _navigationPage = new T_Navigation(this);
     _popupPage = new T_Popup(this);
     _cardPage = new T_Card(this);
@@ -360,7 +358,6 @@ void MainWindow::initContent()
     addPageNode("ElaTableView", _tableViewPage, _viewKey, ElaIconType::Table);
     addPageNode("ElaTreeView", _treeViewPage, _viewKey, ElaIconType::ListTree);
     expandNavigationNode(_viewKey);
-    addPageNode("ElaGraphics", _graphicsPage, 9, ElaIconType::Paintbrush);
     addPageNode("ElaCard", _cardPage, ElaIconType::Cards);
     QString customKey;
     addCategoryNode("Custom", customKey);
@@ -400,9 +397,6 @@ void MainWindow::initContent()
 #endif
     connect(_homePage, &T_Home::elaBaseComponentNavigation, this, [=]() {
         this->navigation(_baseComponentsPage->property("ElaPageKey").toString());
-    });
-    connect(_homePage, &T_Home::elaSceneNavigation, this, [=]() {
-        this->navigation(_graphicsPage->property("ElaPageKey").toString());
     });
     connect(_homePage, &T_Home::elaIconNavigation, this, [=]() {
         this->navigation(_iconPage->property("ElaPageKey").toString());

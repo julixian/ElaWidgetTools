@@ -120,9 +120,9 @@ Q_DECLARE_FLAGS(ButtonFlags, ButtonType)
 
 enum CustomArea
 {
-    LeftArea = 0x0001,
-    MiddleArea = 0x0002,
-    RightArea = 0x0003,
+    LeftArea = 0x0000,
+    MiddleArea = 0x0001,
+    RightArea = 0x0002,
 };
 Q_ENUM_CREATE(CustomArea)
 

@@ -81,7 +81,7 @@ ElaMultiSelectComboBox::~ElaMultiSelectComboBox()
     delete d->_comboBoxStyle;
 }
 
-void ElaMultiSelectComboBox::setCurrentSelection(QString selection)
+void ElaMultiSelectComboBox::setCurrentSelection(const QString& selection)
 {
     Q_D(ElaMultiSelectComboBox);
     d->_itemSelection.fill(false);
@@ -98,7 +98,7 @@ void ElaMultiSelectComboBox::setCurrentSelection(QString selection)
     d->_refreshCurrentIndexs();
 }
 
-void ElaMultiSelectComboBox::setCurrentSelection(QStringList selection)
+void ElaMultiSelectComboBox::setCurrentSelection(const QStringList& selection)
 {
     Q_D(ElaMultiSelectComboBox);
     d->_comboView->selectionModel()->clearSelection();
@@ -148,7 +148,7 @@ void ElaMultiSelectComboBox::setCurrentSelection(QList<int> selectionIndex)
     d->_refreshCurrentIndexs();
 }
 
-QStringList ElaMultiSelectComboBox::getCurrentSelection() const
+const QStringList& ElaMultiSelectComboBox::getCurrentSelection() const
 {
     return d_ptr->_selectedTextList;
 }
@@ -200,7 +200,7 @@ void ElaMultiSelectComboBox::paintEvent(QPaintEvent* e)
         painter.translate(expandIconRect.x() + (qreal)expandIconRect.width() / 2 - 2, expandIconRect.y() + (qreal)expandIconRect.height() / 2);
         painter.rotate(d->_pExpandIconRotate);
         painter.translate(-expandIconRect.x() - (qreal)expandIconRect.width() / 2 + 2, -expandIconRect.y() - (qreal)expandIconRect.height() / 2);
-        painter.drawText(expandIconRect, Qt::AlignVCenter, QChar((unsigned short)ElaIconType::AngleDown));
+        painter.drawText(expandIconRect, Qt::AlignVCenter, QChar(ElaIconType::AngleDown));
         painter.restore();
     }
 }
