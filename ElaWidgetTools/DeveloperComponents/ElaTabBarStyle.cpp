@@ -193,6 +193,8 @@ QSize ElaTabBarStyle::sizeFromContents(ContentsType type, const QStyleOption* op
         QSize tabSize = _pTabSize;
         if (const QStyleOptionTab* topt = qstyleoption_cast<const QStyleOptionTab*>(option))
         {
+            constexpr int maximumAutomaticTabWidth = 260;
+            const int maximumTabWidth = qMax(tabSize.width(), maximumAutomaticTabWidth);
             int contentWidth = topt->fontMetrics.horizontalAdvance(topt->text) + 70;
             if (!topt->icon.isNull())
             {
@@ -200,7 +202,7 @@ QSize ElaTabBarStyle::sizeFromContents(ContentsType type, const QStyleOption* op
             }
             if (contentWidth > tabSize.width())
             {
-                tabSize.setWidth(contentWidth);
+                tabSize.setWidth(qMin(contentWidth, maximumTabWidth));
             }
         }
         return tabSize;
