@@ -51,13 +51,7 @@ void ElaAppBarPrivate::onCloseButtonClicked()
     Q_Q(ElaAppBar);
     if (_pIsDefaultClosed)
     {
-        const auto window = q->window();
-        window->close();
-        QApplication::processEvents();
-        if (const auto windowHandle = window->windowHandle())
-        {
-            windowHandle->close();
-        }
+        q->window()->close();
     }
     else
     {
