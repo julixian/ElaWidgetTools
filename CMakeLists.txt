@@ -10,12 +10,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
-#在这里配置QT路径 例如 D:/Qt/6.6.2/msvc2019_64 D:/Qt/5.15.2/msvc2019_64 /home/liniyous/Qt/5.15.2/gcc_64
-SET(QT_SDK_DIR D:/Qt/6.11.1/msvc2022_64 CACHE PATH "QT SDK DIR" FORCE)
-message("在CMAKE中配置 QT_SDK_DIR 选项指定QT路径; 当前路径: ${QT_SDK_DIR}")
-SET(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/Install CACHE PATH "Installation path" FORCE)
+set(QT_SDK_DIR "" CACHE PATH "Qt SDK directory")
+if(NOT QT_SDK_DIR)
+    message(FATAL_ERROR "Set QT_SDK_DIR to the Qt SDK directory")
+endif()
+option(ELAWIDGETTOOLS_BUILD_EXAMPLE "Build the ElaWidgetTools example" ON)
 
-list(APPEND CMAKE_PREFIX_PATH ${QT_SDK_DIR})
+list(PREPEND CMAKE_PREFIX_PATH "${QT_SDK_DIR}")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets WidgetsPrivate)
@@ -27,7 +28,9 @@ if (NOT WIN32)
 endif ()
 
 add_subdirectory(ElaWidgetTools)
-add_subdirectory(ElaWidgetToolsExample)
+if(ELAWIDGETTOOLS_BUILD_EXAMPLE)
+    add_subdirectory(ElaWidgetToolsExample)
+endif()
 
 if (${QT_VERSION} VERSION_LESS 6.1.0)
     set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.ElaWidgetTools)
