@@ -1,5 +1,7 @@
 # mcpp
-/target/
+target/
+compile_commands.json
+mcpp.lock
 
 # C++ objects and libs
 *.slo

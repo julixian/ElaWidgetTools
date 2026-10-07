@@ -1,0 +1,6 @@
+[workspace]
+members = ["ElaWidgetTools", "ElaWidgetToolsExample"]
+
+[build]
+default-profile = "release"
+

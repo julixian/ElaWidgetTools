@@ -1,0 +1,34 @@
+#include "../mcpp-qt.hpp"
+
+int main() {
+    namespace fs = std::filesystem;
+    const std::vector<std::string> include_directories = {".", "private",
+        "DeveloperComponents", "DeveloperComponents/Command"};
+    ela_build::configure_qt(".", "ElaWidgetTools.qrc", include_directories, true);
+    const bool windows = std::string_view(mcpp::target_os()) == "windows";
+    // GPP 通过环境变量指定隔离的安装目录；普通构建发布到根目录 out/ElaWidgetTools。
+    mcpp::rerun_if_env_changed("ELAWIDGETTOOLS_INSTALL_DIR");
+    const std::string_view install_directory = mcpp::env_or("ELAWIDGETTOOLS_INSTALL_DIR");
+    const auto install = install_directory.empty() ?
+        fs::path(mcpp::manifest_dir()).parent_path() / "out" / "ElaWidgetTools" : fs::path(install_directory);
+    const std::string library = windows ? "ElaWidgetTools.dll" :
+        std::string_view(mcpp::target_os()) == "macos" ? "libElaWidgetTools.dylib" : "libElaWidgetTools.so";
+    const auto destination = (install / library).generic_string();
+    mcpp::action stage;
+    stage.id = "ela-publish-library";
+    stage.role = mcpp::roles::artifact;
+    stage.arg("${mcpp.self}").arg("stage").arg("--output").arg(destination.c_str())
+        .arg("${mcpp.target_file:ElaWidgetTools}")
+        .input("${mcpp.target_file:ElaWidgetTools}").output(destination.c_str()).submit();
+    if (windows) {
+        const bool msvc = std::string_view(mcpp::target_env()) == "msvc";
+        const std::string filename = msvc ? "ElaWidgetTools.lib" : "libElaWidgetTools.dll.a";
+        const auto source = "bin/" + filename;
+        const auto output = (install / filename).generic_string();
+        mcpp::action stage_import;
+        stage_import.id = "ela-publish-import-library";
+        stage_import.role = mcpp::roles::artifact;
+        stage_import.arg("${mcpp.self}").arg("stage").arg("--output").arg(output.c_str())
+            .arg(source.c_str()).input("${mcpp.target_file:ElaWidgetTools}").output(output.c_str()).submit();
+    }
+}

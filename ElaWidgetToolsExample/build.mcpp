@@ -1,0 +1,51 @@
+#include "../mcpp-qt.hpp"
+
+int main() {
+    namespace fs = std::filesystem;
+    // Qt 6 的原 CMake 工程按后缀收集资源；旧 qrc 包含已删除的 GIF，不再直接使用。
+    const auto resource_directory = fs::path(mcpp::manifest_dir()) / "Resource";
+    mcpp::rerun_if_changed_glob("Resource/**");
+    std::vector<fs::path> files;
+    for (const auto& entry : fs::recursive_directory_iterator(resource_directory)) {
+        const auto extension = entry.path().extension().string();
+        if (entry.is_regular_file() && (extension == ".png" || extension == ".jpg" || extension == ".svg" ||
+            extension == ".ico" || extension == ".ttf" || extension == ".webp" || extension == ".js"))
+            files.push_back(entry.path());
+    }
+    std::ranges::sort(files);
+    std::string resources = "<RCC><qresource prefix=\"/\">\n";
+    for (const auto& file : files) {
+        const auto name = file.lexically_relative(mcpp::manifest_dir()).generic_string();
+        resources += "<file alias=\"" + name + "\">" + file.generic_string() + "</file>\n";
+    }
+    resources += "</qresource></RCC>\n";
+    const auto qrc = fs::path(mcpp::out_dir()) / mcpp::profile() / "ElaWidgetToolsExample.qrc";
+    fs::create_directories(qrc.parent_path());
+    std::ifstream input(qrc, std::ios::binary);
+    const std::string old{std::istreambuf_iterator<char>(input), {}};
+    input.close();
+    if (old != resources) std::ofstream(qrc, std::ios::binary) << resources;
+
+    const std::vector<std::string> include_directories = {".", "ExamplePage", "ModelView", "../ElaWidgetTools"};
+    ela_build::configure_qt(".", qrc, include_directories, false);
+
+    // 普通构建把示例和其依赖的 Ela 动态库发布到根目录 out/ElaWidgetToolsExample，不部署 Qt DLL。
+    const auto output_directory = fs::path(mcpp::manifest_dir()).parent_path() / "out" / "ElaWidgetToolsExample";
+    const bool windows = std::string_view(mcpp::target_os()) == "windows";
+    const std::string library = windows ? "ElaWidgetTools.dll" :
+        std::string_view(mcpp::target_os()) == "macos" ? "libElaWidgetTools.dylib" : "libElaWidgetTools.so";
+    const auto executable = (output_directory / (windows ? "ElaWidgetToolsExample.exe" : "ElaWidgetToolsExample")).generic_string();
+    mcpp::action stage;
+    stage.id = "ela-publish-example";
+    stage.role = mcpp::roles::artifact;
+    stage.arg("${mcpp.self}").arg("stage").arg("--output").arg(executable.c_str())
+        .arg("${mcpp.target_file:ElaWidgetToolsExample}")
+        .input("${mcpp.target_file:ElaWidgetToolsExample}").output(executable.c_str()).submit();
+    const auto dependency = (output_directory / library).generic_string();
+    mcpp::action stage_library;
+    stage_library.id = "ela-publish-example-library";
+    stage_library.role = mcpp::roles::artifact;
+    stage_library.arg("${mcpp.self}").arg("stage").arg("--output").arg(dependency.c_str())
+        .arg("${mcpp.target_file:ElaWidgetTools}")
+        .input("${mcpp.target_file:ElaWidgetTools}").output(dependency.c_str()).submit();
+}
