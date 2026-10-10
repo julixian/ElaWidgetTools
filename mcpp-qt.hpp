@@ -34,7 +34,7 @@ inline void configure_qt(const char* source_directory, const std::filesystem::pa
         mcpp::define("QT_NO_DEBUG");
     }
     if (windows && std::string_view(mcpp::target_arch()) == "x86_64") mcpp::define("WIN64");
-    const auto generated = fs::path(mcpp::out_dir()) / mcpp::profile() / "qt";
+    const auto generated = fs::path(mcpp::out_dir()) / "qt";
     // 仅复用插件的 SDK 定位，不调用 compile：库构建无需复制 Qt DLL/插件。
     if (macos) mcpp::cxxflag(("-F" + (qt / "lib").generic_string()).c_str());
     else mcpp::include_dir((qt / "include").generic_string().c_str());

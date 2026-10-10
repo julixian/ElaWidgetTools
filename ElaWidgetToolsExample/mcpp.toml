@@ -1,8 +1,6 @@
 [package]
 name = "ElaWidgetToolsExample"
 version = "1.0.0"
-standard = "c++23"
-license = "MIT"
 
 [dependencies]
 ElaWidgetTools = { path = "../ElaWidgetTools", linkage = "shared" }
@@ -12,22 +10,8 @@ mcpp.plugins = { version = "0.18.1", features = ["rules-qt"], host-module = true
 
 [build]
 default-profile = "release"
-cxx_runtime = "host-coupled"
 sources = ["**/*.cpp", "!main.cpp"]
 include_dirs = [".", "ExamplePage", "ModelView", "../ElaWidgetTools"]
-
-[profile.release]
-opt = 3
-debug = true
-lto = true
-
-[profile.fast-release]
-opt = 0
-debug = true
-lto = false
-
-[target.windows.build]
-defines = ["UNICODE", "_UNICODE", "WIN32", "NOMINMAX", "_CRT_SECURE_NO_WARNINGS", "_ENABLE_EXTENDED_ALIGNED_STORAGE"]
 
 [targets.ElaWidgetToolsExample]
 kind = "bin"

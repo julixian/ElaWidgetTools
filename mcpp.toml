@@ -1,6 +1,22 @@
 [workspace]
 members = ["ElaWidgetTools", "ElaWidgetToolsExample"]
 
-[build]
-default-profile = "release"
+[workspace.package]
+standard = "c++23"
+license = "MIT"
 
+[workspace.build]
+cxx_runtime = "host-coupled"
+
+[workspace.target.windows.build]
+defines = ["UNICODE", "_UNICODE", "WIN32", "NOMINMAX", "_CRT_SECURE_NO_WARNINGS", "_ENABLE_EXTENDED_ALIGNED_STORAGE"]
+
+[workspace.profile.release]
+opt = 3
+debug = true
+lto = true
+
+[workspace.profile.fast-release]
+opt = 0
+debug = true
+lto = false

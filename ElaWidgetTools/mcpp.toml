@@ -1,35 +1,20 @@
 [package]
 name = "ElaWidgetTools"
 version = "2.0.0"
-standard = "c++23"
-license = "MIT"
 
 [build-dependencies]
 mcpp.plugins = { version = "0.18.1", features = ["rules-qt"], host-module = true }
 
 [build]
 default-profile = "release"
-cxx_runtime = "host-coupled"
 sources = ["**/*.cpp"]
 include_dirs = [".", "private", "DeveloperComponents", "DeveloperComponents/Command"]
 # 原 CMakeLists 显式定义的 DLL 导出宏，仅库编译使用。
 defines = ["ELAWIDGETTOOLS_LIBRARY"]
 
 [target.windows.build]
-# Qt 的 MSVC 平台使用宏，另加 NOMINMAX 防止 Windows 宏冲突、CRT 宏关闭弃用警告。
-defines = ["UNICODE", "_UNICODE", "WIN32", "NOMINMAX", "_CRT_SECURE_NO_WARNINGS", "_ENABLE_EXTENDED_ALIGNED_STORAGE"]
 ldflags = ["-ld3d11", "-ldxgi", "-luser32", "-lgdi32", "-ldwmapi", "-lshell32"]
 
 [targets.ElaWidgetTools]
 kind = "shared"
 windows_auto_export = false
-
-[profile.release]
-opt = 3
-debug = true
-lto = true
-
-[profile.fast-release]
-opt = 0
-debug = true
-lto = false

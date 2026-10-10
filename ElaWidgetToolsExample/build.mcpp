@@ -19,7 +19,7 @@ int main() {
         resources += "<file alias=\"" + name + "\">" + file.generic_string() + "</file>\n";
     }
     resources += "</qresource></RCC>\n";
-    const auto qrc = fs::path(mcpp::out_dir()) / mcpp::profile() / "ElaWidgetToolsExample.qrc";
+    const auto qrc = fs::path(mcpp::out_dir()) / "ElaWidgetToolsExample.qrc";
     fs::create_directories(qrc.parent_path());
     std::ifstream input(qrc, std::ios::binary);
     const std::string old{std::istreambuf_iterator<char>(input), {}};
