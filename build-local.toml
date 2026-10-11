@@ -1,0 +1,6 @@
+# 本机工具配置，按宿主系统分表。
+# 路径使用单引号字符串，反斜杠无需转义。
+[windows]
+# Qt SDK 根目录，包含 include、lib、bin。
+# GPP 调用时可以通过 QT_ROOT_DIR 环境变量覆盖。
+qt_root = 'D:\Qt\6.12.0\msvc2022_64'

@@ -4,11 +4,12 @@ version = "2.0.0"
 
 [build-dependencies]
 mcpp.plugins = { version = "0.18.1", features = ["rules-qt"] }
+marzer.tomlplusplus = "3.4.0"
 
 [build]
 default-profile = "release"
 sources = ["**/*.cpp"]
-include_dirs = [".", "private", "DeveloperComponents", "DeveloperComponents/Command"]
+include_dirs = [".", "private", "Development", "Development/Command"]
 # 原 CMakeLists 显式定义的 DLL 导出宏，仅库编译使用。
 defines = ["ELAWIDGETTOOLS_LIBRARY"]
 

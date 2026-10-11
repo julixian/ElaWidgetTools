@@ -68,3 +68,4 @@ compile_commands.json
 out/
 CMakePresets.json
 CMakeUserPresets.json
+!build-local.toml

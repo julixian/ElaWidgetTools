@@ -1,3 +1,8 @@
+import std;
+import mcpp;
+import mcpp.rules.qt;
+import tomlplusplus;
+
 #include "../mcpp-qt.hpp"
 
 int main() {

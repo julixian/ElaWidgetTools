@@ -1,9 +1,14 @@
+import std;
+import mcpp;
+import mcpp.rules.qt;
+import tomlplusplus;
+
 #include "../mcpp-qt.hpp"
 
 int main() {
     namespace fs = std::filesystem;
     const std::vector<std::string> include_directories = {".", "private",
-        "DeveloperComponents", "DeveloperComponents/Command"};
+        "Development", "Development/Command"};
     ela_build::configure_qt(".", "ElaWidgetTools.qrc", include_directories, true);
     const bool windows = std::string_view(mcpp::target_os()) == "windows";
     // GPP 通过环境变量指定隔离的安装目录；普通构建发布到根目录 out/ElaWidgetTools。

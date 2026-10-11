@@ -27,7 +27,7 @@ QAction* ElaRibbonBarModel::addRibbonAction(const QString& actionName)
 QAction* ElaRibbonBarModel::addRibbonAction(const QString& actionName, ElaIconType::IconName icon)
 {
     auto action = new QAction(actionName, this);
-    action->setProperty("ElaRibbonIcon", QChar(icon));
+    action->setProperty("ElaRibbonIcon", QChar(static_cast<char16_t>(icon)));
     const int insertIndex = _ribbonDataList[0].ribbonDataList.count();
     beginInsertRows(QModelIndex(), insertIndex, insertIndex);
     _ribbonDataList[0].ribbonDataList.append(action);
@@ -84,7 +84,7 @@ QAction* ElaRibbonBarModel::addRibbonAction(const QString& groupName, const QStr
 {
     auto action = new QAction(actionName, this);
     action->setProperty("ElaRibbonGroupName", groupName);
-    action->setProperty("ElaRibbonIcon", QChar(icon));
+    action->setProperty("ElaRibbonIcon", QChar(static_cast<char16_t>(icon)));
     ElaRibbonGroupData* targetGroup = nullptr;
     int insertIndex = 0;
     for (auto& groupData: _ribbonDataList)

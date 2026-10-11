@@ -1,29 +1,21 @@
 #pragma once
 
-import std;
-import mcpp;
-import mcpp.rules.qt;
-
 namespace ela_build {
 inline void configure_qt(const char* source_directory, const std::filesystem::path& resource_file,
                          std::span<const std::string> include_directories, bool library) {
     namespace fs = std::filesystem;
-    // 环境变量优先；未设置时读取 Ela 根目录的路径文件第一行，再沿用插件自动查找。
+    // GPP 可以通过环境变量指定 Qt；独立构建读取本机 TOML 的宿主系统表。
     mcpp::rerun_if_env_changed("QT_ROOT_DIR");
     fs::path qt;
     if (const std::string_view environment_root = mcpp::env_or("QT_ROOT_DIR"); !environment_root.empty()) {
         qt = environment_root;
     } else {
-        const auto configuration = fs::path(mcpp::manifest_dir()).parent_path() / "QT_ROOT_DIR.txt";
+        const auto configuration = fs::path(mcpp::manifest_dir()).parent_path() / "build-local.toml";
         mcpp::rerun_if_changed(configuration.generic_string().c_str());
-        std::ifstream input(configuration);
-        std::string root;
-        std::getline(input, root);
-        if (!root.empty() && root.back() == '\r') root.pop_back();
-        qt = root;
-        if (qt.empty()) qt = mcpp::rules::qt::root();
+        const auto config = toml::parse_file(configuration.string());
+        qt = config["windows"]["qt_root"].value_or(std::string{});
     }
-    if (qt.empty()) throw std::runtime_error("请通过 QT_ROOT_DIR 或根目录 QT_ROOT_DIR.txt 指定 Qt SDK 根目录");
+    if (qt.empty()) throw std::runtime_error("请通过 QT_ROOT_DIR 或 build-local.toml 的 windows.qt_root 指定 Qt SDK 根目录");
     const bool windows = std::string_view(mcpp::target_os()) == "windows";
     const bool macos = std::string_view(mcpp::target_os()) == "macos";
     // 对齐原 CMake Release 的 NDEBUG，以及 Qt targets 对非 Debug 配置提供的 QT_NO_DEBUG。

@@ -7,6 +7,7 @@ ElaWidgetTools = { path = "../ElaWidgetTools", linkage = "shared" }
 
 [build-dependencies]
 mcpp.plugins = { version = "0.18.1", features = ["rules-qt"] }
+marzer.tomlplusplus = "3.4.0"
 
 [build]
 default-profile = "release"
