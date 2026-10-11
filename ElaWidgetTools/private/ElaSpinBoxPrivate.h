@@ -1,9 +1,10 @@
-#ifndef ELASPINBOXPRIVATE_H
-#define ELASPINBOXPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELASPINBOXPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELASPINBOXPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QObject>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 
 class ElaMenu;
 class ElaSpinBox;
@@ -11,8 +12,8 @@ class ElaSpinBoxStyle;
 class ElaSpinBoxPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaSpinBox)
-    Q_PROPERTY_CREATE(qreal, ExpandMarkWidth)
+    ELA_PIMPL_D(ElaSpinBox)
+    ELA_PROPERTY(qreal, ExpandMarkWidth)
 public:
     explicit ElaSpinBoxPrivate(QObject* parent = nullptr);
     ~ElaSpinBoxPrivate() override;
@@ -24,4 +25,5 @@ private:
     ElaMenu* _createStandardContextMenu();
 };
 
-#endif // ELASPINBOXPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELASPINBOXPRIVATE_H_
+

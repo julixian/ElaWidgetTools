@@ -1,5 +1,6 @@
 #include "ElaAcrylicUrlCard.h"
 
+#include "ElaApplication.h"
 #include <QDesktopServices>
 #include <QPainter>
 #include <QPainterPath>
@@ -7,21 +8,21 @@
 
 #include "ElaTheme.h"
 #include "private/ElaAcrylicUrlCardPrivate.h"
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, int, BorderRadius)
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, qreal, MainOpacity)
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, qreal, NoiseOpacity)
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, int, BrushAlpha)
-Q_PROPERTY_REF_CREATE_Q_CPP(ElaAcrylicUrlCard, QString, Title);
-Q_PROPERTY_REF_CREATE_Q_CPP(ElaAcrylicUrlCard, QString, SubTitle);
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, int, TitlePixelSize);
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, int, SubTitlePixelSize);
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, int, TitleSpacing);
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, int, SubTitleSpacing);
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, QPixmap, CardPixmap);
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, QSize, CardPixmapSize);
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, int, CardPixmapBorderRadius)
-Q_PROPERTY_CREATE_Q_CPP(ElaAcrylicUrlCard, ElaCardPixType::PixMode, CardPixMode);
-Q_PROPERTY_REF_CREATE_Q_CPP(ElaAcrylicUrlCard, QString, Url);
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, int, BorderRadius)
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, qreal, MainOpacity)
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, qreal, NoiseOpacity)
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, int, BrushAlpha)
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, QString, Title);
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, QString, SubTitle);
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, int, TitlePixelSize);
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, int, SubTitlePixelSize);
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, int, TitleSpacing);
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, int, SubTitleSpacing);
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, QPixmap, CardPixmap);
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, QSize, CardPixmapSize);
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, int, CardPixmapBorderRadius)
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, ElaCardPixType::PixMode, CardPixMode);
+ELA_PROPERTY_Q_CPP(ElaAcrylicUrlCard, QString, Url);
 ElaAcrylicUrlCard::ElaAcrylicUrlCard(QWidget* parent)
     : QPushButton(parent), d_ptr(new ElaAcrylicUrlCardPrivate())
 {
@@ -121,7 +122,7 @@ void ElaAcrylicUrlCard::paintEvent(QPaintEvent* event)
     // 图标绘制
     painter.save();
     QFont iconFont = QFont("ElaAwesome");
-    iconFont.setPixelSize(13);
+    iconFont.setPixelSize(eApp->getFontPixelSize());
     painter.setFont(iconFont);
     painter.setPen(ElaThemeColor(d->_themeMode, BasicText));
     painter.drawText(width - 1.5 * iconFont.pixelSize(), height() - iconFont.pixelSize(), QChar((unsigned short)ElaIconType::UpRightFromSquare));

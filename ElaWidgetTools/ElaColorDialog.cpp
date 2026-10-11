@@ -36,10 +36,6 @@ ElaColorDialog::ElaColorDialog(QWidget* parent)
     d->_appBar->setIsFixedSize(true);
     d->_appBar->setIsStayTop(true);
     d->_appBar->setWindowButtonFlags(ElaAppBarType::CloseButtonHint);
-    d->_appBar->setIsDefaultClosed(false);
-    connect(d->_appBar, &ElaAppBar::closeButtonClicked, this, [=]() {
-        close();
-    });
 
     // 颜色选择器
     ElaText* colorPickerText = new ElaText("编辑颜色", this);
@@ -94,12 +90,19 @@ ElaColorDialog::ElaColorDialog(QWidget* parent)
     htmlEditLayout->addSpacing(6);
     htmlEditLayout->addWidget(d->_htmlEdit);
     htmlEditLayout->addStretch();
+
+    // 模式切换
     d->_modeComboBox = new ElaComboBox(this);
-    d->_modeComboBox->setFixedSize(132, 33);
+    d->_modeComboBox->setFixedSize(120, 33);
     d->_modeComboBox->addItem("RGB");
     d->_modeComboBox->addItem("HSV");
     d->_modeComboBox->setCurrentIndex(0);
     connect(d->_modeComboBox, QOverload<int>::of(&ElaComboBox::currentIndexChanged), d, &ElaColorDialogPrivate::onColorModeChanged);
+    QHBoxLayout* modeLayout = new QHBoxLayout();
+    modeLayout->setContentsMargins(0, 0, 0, 0);
+    modeLayout->addSpacing(6);
+    modeLayout->addWidget(d->_modeComboBox);
+    modeLayout->addStretch();
 
     // R或H
     d->_firstEdit = new ElaLineEdit(this);
@@ -151,7 +154,7 @@ ElaColorDialog::ElaColorDialog(QWidget* parent)
     paramControlLayout->setContentsMargins(0, 0, 0, 0);
     paramControlLayout->setSpacing(10);
     paramControlLayout->addLayout(htmlEditLayout);
-    paramControlLayout->addWidget(d->_modeComboBox);
+    paramControlLayout->addLayout(modeLayout);
     paramControlLayout->addLayout(firstEditLayout);
     paramControlLayout->addLayout(secondEditLayout);
     paramControlLayout->addLayout(thridEditLayout);

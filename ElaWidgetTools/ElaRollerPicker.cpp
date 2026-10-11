@@ -1,12 +1,13 @@
 #include "ElaRollerPicker.h"
 
+#include "ElaApplication.h"
 #include "ElaRollerPickerPrivate.h"
 #include "ElaTheme.h"
 #include <QDebug>
 #include <QPainter>
 #include <QVBoxLayout>
 
-Q_PROPERTY_CREATE_Q_CPP(ElaRollerPicker, int, BorderRadius)
+ELA_PROPERTY_Q_CPP(ElaRollerPicker, int, BorderRadius)
 ElaRollerPicker::ElaRollerPicker(QWidget* parent)
     : QPushButton{parent}, d_ptr(new ElaRollerPickerPrivate())
 {
@@ -18,7 +19,7 @@ ElaRollerPicker::ElaRollerPicker(QWidget* parent)
     setObjectName("ElaRollerPicker");
     setStyleSheet("#ElaRollerPicker{background-color:transparent;}");
     QFont font = this->font();
-    font.setPixelSize(16);
+    font.setPixelSize(eApp->getFontPixelSize() + 3);
     setFont(font);
 
     d->_rollerPickerContainer = new ElaRollerPickerContainer(this);

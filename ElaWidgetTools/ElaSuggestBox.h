@@ -1,19 +1,20 @@
-#ifndef ELASUGGESTBOX_H
-#define ELASUGGESTBOX_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELASUGGESTBOX_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELASUGGESTBOX_H_
 
 #include <QVariantMap>
 #include <QWidget>
 
-#include "ElaDef.h"
-#include "ElaProperty.h"
+#include "ElaWidgetToolsDef.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 
 class ElaSuggestBoxPrivate;
 class ELA_EXPORT ElaSuggestBox : public QWidget
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaSuggestBox)
-    Q_PROPERTY_CREATE_Q_H(int, BorderRadius)
-    Q_PROPERTY_CREATE_Q_H(Qt::CaseSensitivity, CaseSensitivity)
+    ELA_PIMPL_Q(ElaSuggestBox)
+    ELA_PROPERTY_Q_H(int, BorderRadius)
+    ELA_PROPERTY_Q_H(Qt::CaseSensitivity, CaseSensitivity)
 public:
     explicit ElaSuggestBox(QWidget* parent = nullptr);
     ~ElaSuggestBox() override;
@@ -23,10 +24,10 @@ public:
     void setFixedHeight(int h);
 
     struct ELA_EXPORT SuggestData {
-        Q_PRIVATE_CREATE(ElaIconType::IconName, ElaIcon)
-        Q_PRIVATE_REF_CREATE(QString, SuggestText)
-        Q_PRIVATE_REF_CREATE(QString, SuggestKey)
-        Q_PRIVATE_CREATE(QVariantMap, SuggestData)
+        ELA_VARIABLE(ElaIconType::IconName, ElaIcon)
+        ELA_VARIABLE(QString, SuggestText)
+        ELA_VARIABLE(QString, SuggestKey)
+        ELA_VARIABLE(QVariantMap, SuggestData)
     public:
         explicit SuggestData();
         explicit SuggestData(ElaIconType::IconName icon, const QString& suggestText, const QVariantMap& suggestData = {});
@@ -44,4 +45,4 @@ Q_SIGNALS:
     Q_SIGNAL void suggestionClicked(const ElaSuggestBox::SuggestData& suggestData);
 };
 
-#endif // ELASUGGESTBOX_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELASUGGESTBOX_H_

@@ -1,11 +1,12 @@
-#ifndef ELACOLORDIALOGPRIVATE_H
-#define ELACOLORDIALOGPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELACOLORDIALOGPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELACOLORDIALOGPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QModelIndex>
 #include <QObject>
 #include <QPixmap>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaAppBar;
 class ElaColorDialog;
 class ElaColorPicker;
@@ -23,13 +24,13 @@ class ElaColorValueSliderStyle;
 class ElaColorDialogPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaColorDialog)
-    Q_PROPERTY_CREATE_D(QColor, CurrentColor)
+    ELA_PIMPL_D(ElaColorDialog)
+    ELA_PROPERTY_D(QColor, CurrentColor)
 public:
     explicit ElaColorDialogPrivate(QObject* parent = nullptr);
-    ~ElaColorDialogPrivate();
+    ~ElaColorDialogPrivate() override;
 
-    Q_SLOT void onColorPickerColorChanged(QColor selectedColor);
+    Q_SLOT void onColorPickerColorChanged(const QColor& selectedColor);
     Q_SLOT void onColorValueSliderChanged(int value);
 
     Q_SLOT void onColorModeChanged(int index);
@@ -78,9 +79,10 @@ private:
     void _updateEditValue();
     void _updateColorPreview();
     void _updateColorValueSlider();
-    QString _completeColorText(QString text) const;
+    QString _completeColorText(const QString& text) const;
     QString _getHexRgbValue() const;
     QColor _getColorFromEdit() const;
 };
 
-#endif // ELACOLORDIALOGPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELACOLORDIALOGPRIVATE_H_
+

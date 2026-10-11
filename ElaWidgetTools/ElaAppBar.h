@@ -1,9 +1,10 @@
-#ifndef ELAAPPBAR_H
-#define ELAAPPBAR_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELAAPPBAR_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELAAPPBAR_H_
 
+#include "ElaPropertyMacro.h"
 #include <QWidget>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 
 #ifdef Q_OS_WIN
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -52,15 +53,20 @@ class ElaAppBarPrivate;
 class ELA_EXPORT ElaAppBar : public QWidget
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaAppBar)
-    Q_PROPERTY_CREATE_Q_H(bool, IsStayTop)
-    Q_PROPERTY_CREATE_Q_H(bool, IsFixedSize)
-    Q_PROPERTY_CREATE_Q_H(bool, IsDefaultClosed)
-    Q_PROPERTY_CREATE_Q_H(bool, IsOnlyAllowMinAndClose)
-    Q_PROPERTY_CREATE_Q_H(int, AppBarHeight)
+    ELA_PIMPL_Q(ElaAppBar)
+    ELA_PROPERTY_Q_H(bool, IsStayTop)
+    ELA_PROPERTY_Q_H(bool, IsDefaultClosed)
+    ELA_PROPERTY_Q_H(bool, IsOnlyAllowMinAndClose)
 public:
     explicit ElaAppBar(QWidget* parent = nullptr);
     ~ElaAppBar() override;
+
+    void setIsFixedSize(bool isFixedSize);
+    Q_REQUIRED_RESULT bool getIsFixedSize() const;
+    void setAppBarHeight(int height);
+    Q_REQUIRED_RESULT int getAppBarHeight() const;
+    void setRibbonHeight(int height);
+    Q_REQUIRED_RESULT int getRibbonHeight() const;
 
     void setCustomWidget(ElaAppBarType::CustomArea customArea, QWidget* customWidget, QObject* hitTestObject = nullptr, const QString& hitTestFunctionName = "");
     QWidget* getCustomWidget(ElaAppBarType::CustomArea customArea) const;
@@ -83,6 +89,9 @@ public:
 #endif
 #endif
 Q_SIGNALS:
+    Q_SIGNAL void pIsFixedSizeChanged();
+    Q_SIGNAL void pAppBarHeightChanged();
+    Q_SIGNAL void pRibbonHeightChanged();
     Q_SIGNAL void routeBackButtonClicked();
     Q_SIGNAL void routeForwardButtonClicked();
     Q_SIGNAL void navigationButtonClicked();
@@ -92,10 +101,10 @@ Q_SIGNALS:
     Q_SIGNAL void customMenuChanged();
 
 protected:
-    virtual bool eventFilter(QObject* obj, QEvent* event) override;
+    bool eventFilter(QObject* obj, QEvent* event) override;
 #ifdef Q_OS_WIN
-    virtual void paintEvent(QPaintEvent* event) override;
+    void paintEvent(QPaintEvent* event) override;
 #endif
 };
 
-#endif // ELAAPPBAR_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELAAPPBAR_H_

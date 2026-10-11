@@ -1,16 +1,17 @@
-#ifndef ELAMESSAGEBAR_H
-#define ELAMESSAGEBAR_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELAMESSAGEBAR_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELAMESSAGEBAR_H_
 
 #include <QWidget>
 
-#include "ElaDef.h"
-#include "ElaProperty.h"
+#include "ElaWidgetToolsDef.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 
 class ElaMessageBarPrivate;
 class ELA_EXPORT ElaMessageBar : public QWidget
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaMessageBar)
+    ELA_PIMPL_Q(ElaMessageBar)
 
 public:
     static void success(ElaMessageBarType::PositionPolicy policy, QString title, QString text, int displayMsec, QWidget* parent = nullptr);
@@ -27,4 +28,4 @@ private:
     ~ElaMessageBar() override;
 };
 
-#endif // ELAMESSAGEBAR_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELAMESSAGEBAR_H_

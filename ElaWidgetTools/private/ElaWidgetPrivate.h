@@ -1,15 +1,16 @@
-#ifndef ELAWIDGETPRIVATE_H
-#define ELAWIDGETPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAWIDGETPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAWIDGETPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QObject>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaWidget;
 class ElaAppBar;
 class ElaWidgetPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaWidget)
+    ELA_PIMPL_D(ElaWidget)
 public:
     explicit ElaWidgetPrivate(QObject* parent = nullptr);
     ~ElaWidgetPrivate() override;
@@ -20,4 +21,5 @@ private:
     ElaAppBar* _appBar{nullptr};
 };
 
-#endif // ELAWIDGETPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAWIDGETPRIVATE_H_
+

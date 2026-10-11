@@ -1,9 +1,10 @@
-#ifndef ELAPROGRESSBARPRIVATE_H
-#define ELAPROGRESSBARPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPROGRESSBARPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPROGRESSBARPRIVATE_H_
 
 #include <QObject>
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 
 class ElaProgressBarStyle;
 class QPropertyAnimation;
@@ -11,7 +12,7 @@ class ElaProgressBar;
 class ElaProgressBarPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaProgressBar)
+    ELA_PIMPL_D(ElaProgressBar)
 public:
     explicit ElaProgressBarPrivate(QObject* parent = nullptr);
     ~ElaProgressBarPrivate();
@@ -22,4 +23,5 @@ private:
     QPropertyAnimation* _busyAnimation{nullptr};
 };
 
-#endif // ELAPROGRESSBARPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPROGRESSBARPRIVATE_H_
+

@@ -1,7 +1,8 @@
-#ifndef ELAPLAINTEXTEDITPRIVATE_H
-#define ELAPLAINTEXTEDITPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPLAINTEXTEDITPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPLAINTEXTEDITPRIVATE_H_
 
-#include "ElaDef.h"
+#include "ElaPropertyMacro.h"
+#include "ElaWidgetToolsDef.h"
 #include <QObject>
 #include <QVariantMap>
 class ElaEvent;
@@ -10,7 +11,7 @@ class ElaPlainTextEditStyle;
 class ElaPlainTextEditPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaPlainTextEdit)
+    ELA_PIMPL_D(ElaPlainTextEdit)
 
 public:
     explicit ElaPlainTextEditPrivate(QObject* parent = nullptr);
@@ -24,4 +25,5 @@ private:
     ElaEvent* _focusEvent{nullptr};
 };
 
-#endif // ELAPLAINTEXTEDITPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPLAINTEXTEDITPRIVATE_H_
+

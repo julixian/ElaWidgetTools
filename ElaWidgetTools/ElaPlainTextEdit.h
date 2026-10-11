@@ -1,15 +1,16 @@
-#ifndef ELAPLAINTEXTEDIT_H
-#define ELAPLAINTEXTEDIT_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELAPLAINTEXTEDIT_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELAPLAINTEXTEDIT_H_
 
 #include <QPlainTextEdit>
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 
 class ElaPlainTextEditPrivate;
 class ELA_EXPORT ElaPlainTextEdit : public QPlainTextEdit
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaPlainTextEdit)
+    ELA_PIMPL_Q(ElaPlainTextEdit)
 public:
     explicit ElaPlainTextEdit(QWidget* parent = nullptr);
     explicit ElaPlainTextEdit(const QString& text, QWidget* parent = nullptr);
@@ -22,4 +23,4 @@ protected:
     virtual void paintEvent(QPaintEvent* event) override;
 };
 
-#endif // ELAPLAINTEXTEDIT_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELAPLAINTEXTEDIT_H_

@@ -1,8 +1,9 @@
-﻿#ifndef ELANAVIGATIONBARPRIVATE_H
-#define ELANAVIGATIONBARPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELANAVIGATIONBARPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELANAVIGATIONBARPRIVATE_H_
 
-#include "ElaDef.h"
+#include "ElaPropertyMacro.h"
 #include "ElaSuggestBox.h"
+#include "ElaWidgetToolsDef.h"
 #include <QMap>
 #include <QObject>
 class QLayout;
@@ -25,17 +26,17 @@ class ElaToolButton;
 class ElaNavigationBarPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaNavigationBar)
-    Q_PROPERTY_CREATE_D(bool, IsTransparent)
-    Q_PROPERTY_CREATE_D(bool, IsAllowPageOpenInNewWindow)
-    Q_PROPERTY_CREATE_D(int, NavigationBarWidth)
-    Q_PROPERTY_CREATE(int, NavigationViewWidth);
-    Q_PROPERTY_CREATE(int, UserButtonSpacing);
+    ELA_PIMPL_D(ElaNavigationBar)
+    ELA_PROPERTY_D(bool, IsTransparent)
+    ELA_PROPERTY_D(bool, IsAllowPageOpenInNewWindow)
+    ELA_PROPERTY_D(int, NavigationBarWidth)
+    ELA_PROPERTY(int, NavigationViewWidth);
+    ELA_PROPERTY(int, UserButtonSpacing);
 
 public:
     explicit ElaNavigationBarPrivate(QObject* parent = nullptr);
     ~ElaNavigationBarPrivate() override;
-    Q_SLOT void onNavigationOpenNewWindow(QString nodeKey);
+    Q_SLOT void onNavigationOpenNewWindow(const QString& nodeKey);
 
     //核心跳转逻辑
     void onTreeViewClicked(const QModelIndex& index, bool isLogRoute = true, bool isRouteBack = false);
@@ -87,4 +88,6 @@ private:
     void _doUserButtonAnimation(bool isCompact, bool isAnimation);
 };
 
-#endif // ELANAVIGATIONBARPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELANAVIGATIONBARPRIVATE_H_
+
+

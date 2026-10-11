@@ -1,4 +1,5 @@
 #include "ElaRoller.h"
+#include "ElaApplication.h"
 #include "ElaRollerPrivate.h"
 #include "ElaTheme.h"
 #include <QDebug>
@@ -8,9 +9,9 @@
 #include <QWheelEvent>
 #include <QtMath>
 #include <utility>
-Q_PROPERTY_CREATE_Q_CPP(ElaRoller, int, BorderRadius)
-Q_PROPERTY_CREATE_Q_CPP(ElaRoller, bool, IsContainer)
-Q_PROPERTY_CREATE_Q_CPP(ElaRoller, bool, IsEnableLoop)
+ELA_PROPERTY_Q_CPP(ElaRoller, int, BorderRadius)
+ELA_PROPERTY_Q_CPP(ElaRoller, bool, IsContainer)
+ELA_PROPERTY_Q_CPP(ElaRoller, bool, IsEnableLoop)
 ElaRoller::ElaRoller(QWidget* parent)
     : QWidget{parent}, d_ptr(new ElaRollerPrivate())
 {
@@ -29,7 +30,7 @@ ElaRoller::ElaRoller(QWidget* parent)
     setObjectName("ElaRoller");
     setStyleSheet("#ElaRoller{background-color:transparent;}");
     QFont font = this->font();
-    font.setPixelSize(16);
+    font.setPixelSize(eApp->getFontPixelSize() + 3);
     setFont(font);
 
     d->_scrollAnimation = new QPropertyAnimation(d, "pScrollOffset");

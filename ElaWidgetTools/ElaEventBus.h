@@ -1,20 +1,21 @@
-#ifndef ELAEVENTBUS_H
-#define ELAEVENTBUS_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELAEVENTBUS_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELAEVENTBUS_H_
 
 #include <QObject>
 #include <QVariantMap>
 
-#include "ElaDef.h"
-#include "ElaProperty.h"
-#include "ElaSingleton.h"
+#include "ElaWidgetToolsDef.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
+#include "ElaSingletonMacro.h"
 class ElaEventPrivate;
 class ELA_EXPORT ElaEvent : public QObject
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaEvent)
-    Q_PROPERTY_REF_CREATE_Q_H(QString, EventName);
-    Q_PROPERTY_REF_CREATE_Q_H(QString, FunctionName);
-    Q_PROPERTY_CREATE_Q_H(Qt::ConnectionType, ConnectionType);
+    ELA_PIMPL_Q(ElaEvent)
+    ELA_PROPERTY_Q_H(QString, EventName);
+    ELA_PROPERTY_Q_H(QString, FunctionName);
+    ELA_PROPERTY_Q_H(Qt::ConnectionType, ConnectionType);
 
 public:
     explicit ElaEvent(QObject* parent = nullptr);
@@ -27,8 +28,8 @@ class ElaEventBusPrivate;
 class ELA_EXPORT ElaEventBus : public QObject
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaEventBus)
-    Q_SINGLETON_CREATE_H(ElaEventBus);
+    ELA_PIMPL_Q(ElaEventBus)
+    ELA_SINGLETON_H(ElaEventBus);
 
 private:
     explicit ElaEventBus(QObject* parent = nullptr);
@@ -42,4 +43,4 @@ private:
     friend class ElaEvent;
 };
 
-#endif // ELAEVENTBUS_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELAEVENTBUS_H_

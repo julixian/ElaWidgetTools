@@ -1,5 +1,6 @@
 #include "ElaCalendarPicker.h"
 
+#include "ElaApplication.h"
 #include <QDate>
 #include <QHBoxLayout>
 #include <QPainter>
@@ -9,7 +10,7 @@
 #include "ElaCalendarPickerContainer.h"
 #include "ElaCalendarPickerPrivate.h"
 #include "ElaTheme.h"
-Q_PROPERTY_CREATE_Q_CPP(ElaCalendarPicker, int, BorderRadius)
+ELA_PROPERTY_Q_CPP(ElaCalendarPicker, int, BorderRadius)
 ElaCalendarPicker::ElaCalendarPicker(QWidget* parent)
     : QPushButton{parent}, d_ptr(new ElaCalendarPickerPrivate())
 {
@@ -75,7 +76,7 @@ void ElaCalendarPicker::paintEvent(QPaintEvent* event)
 
     // 图标绘制
     QFont iconFont = QFont("ElaAwesome");
-    iconFont.setPixelSize(17);
+    iconFont.setPixelSize(eApp->getFontPixelSize() + 4);
     painter.setFont(iconFont);
     painter.drawText(QRect(baseRect.right() - 25, 0, 15, height()), Qt::AlignVCenter | Qt::AlignRight, QChar((unsigned short)ElaIconType::CalendarRange));
     painter.restore();

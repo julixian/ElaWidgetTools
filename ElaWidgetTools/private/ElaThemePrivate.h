@@ -1,16 +1,17 @@
-#ifndef ELATHEMEPRIVATE_H
-#define ELATHEMEPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELATHEMEPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELATHEMEPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QColor>
 #include <QMap>
 #include <QObject>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaTheme;
 class ElaThemePrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaTheme)
+    ELA_PIMPL_D(ElaTheme)
 public:
     explicit ElaThemePrivate(QObject* parent = nullptr);
     ~ElaThemePrivate();
@@ -22,4 +23,5 @@ private:
     void _initThemeColor();
 };
 
-#endif // ELATHEMEPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELATHEMEPRIVATE_H_
+

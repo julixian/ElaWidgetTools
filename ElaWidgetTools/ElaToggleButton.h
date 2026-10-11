@@ -1,16 +1,17 @@
-#ifndef ELATOGGLEBUTTON_H
-#define ELATOGGLEBUTTON_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELATOGGLEBUTTON_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELATOGGLEBUTTON_H_
 
 #include <QPushButton>
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 class ElaToggleButtonPrivate;
 class ELA_EXPORT ElaToggleButton : public QWidget
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaToggleButton)
-    Q_PROPERTY_CREATE_Q_H(int, BorderRadius)
-    Q_PROPERTY_REF_CREATE_Q_H(QString, Text)
+    ELA_PIMPL_Q(ElaToggleButton)
+    ELA_PROPERTY_Q_H(int, BorderRadius)
+    ELA_PROPERTY_Q_H(QString, Text)
 public:
     explicit ElaToggleButton(QWidget* parent = nullptr);
     explicit ElaToggleButton(const QString& text, QWidget* parent = nullptr);
@@ -28,4 +29,4 @@ protected:
     virtual void paintEvent(QPaintEvent* event) override;
 };
 
-#endif // ELATOGGLEBUTTON_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELATOGGLEBUTTON_H_

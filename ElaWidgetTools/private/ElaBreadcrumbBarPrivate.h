@@ -1,9 +1,10 @@
-#ifndef ELABREADCRUMBBARPRIVATE_H
-#define ELABREADCRUMBBARPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELABREADCRUMBBARPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELABREADCRUMBBARPRIVATE_H_
 
 #include <QObject>
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 class ElaBaseListView;
 class ElaBreadcrumbBarModel;
 class ElaBreadcrumbBarDelegate;
@@ -12,9 +13,9 @@ class ElaBreadcrumbBar;
 class ElaBreadcrumbBarPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaBreadcrumbBar)
-    Q_PROPERTY_CREATE_D(int, TextPixelSize)
-    Q_PROPERTY_CREATE_D(bool, IsAutoRemove)
+    ELA_PIMPL_D(ElaBreadcrumbBar)
+    ELA_PROPERTY_D(int, TextPixelSize)
+    ELA_PROPERTY_D(bool, IsAutoRemove)
 public:
     explicit ElaBreadcrumbBarPrivate(QObject* parent = nullptr);
     ~ElaBreadcrumbBarPrivate();
@@ -25,4 +26,5 @@ private:
     ElaBaseListView* _listView{nullptr};
 };
 
-#endif // ELABREADCRUMBBARPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELABREADCRUMBBARPRIVATE_H_
+

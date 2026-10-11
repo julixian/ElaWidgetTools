@@ -1,16 +1,17 @@
-#ifndef ELAFLOWLAYOUT_H
-#define ELAFLOWLAYOUT_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELAFLOWLAYOUT_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELAFLOWLAYOUT_H_
 
 #include <QLayout>
 #include <QMap>
 #include <QStyle>
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 class ElaFlowLayoutPrivate;
 class ELA_EXPORT ElaFlowLayout : public QLayout
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaFlowLayout)
+    ELA_PIMPL_Q(ElaFlowLayout)
 public:
     explicit ElaFlowLayout(QWidget* parent, int margin = -1, int hSpacing = -1, int vSpacing = -1);
     explicit ElaFlowLayout(int margin = -1, int hSpacing = -1, int vSpacing = -1);
@@ -32,4 +33,4 @@ public:
     void setIsAnimation(bool isAnimation);
 };
 
-#endif // ELAFLOWLAYOUT_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELAFLOWLAYOUT_H_

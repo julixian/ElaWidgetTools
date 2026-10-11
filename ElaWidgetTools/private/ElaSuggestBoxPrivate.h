@@ -1,20 +1,21 @@
-#ifndef ELASUGGESTBOXPRIVATE_H
-#define ELASUGGESTBOXPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELASUGGESTBOXPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELASUGGESTBOXPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QAction>
 #include <QObject>
 #include <QSize>
 #include <QVariantMap>
 #include <QVector>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaSuggestion : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY_CREATE(ElaIconType::IconName, ElaIcon)
-    Q_PROPERTY_REF_CREATE(QString, SuggestText)
-    Q_PROPERTY_REF_CREATE(QString, SuggestKey)
-    Q_PROPERTY_CREATE(QVariantMap, SuggestData)
+    ELA_PROPERTY(ElaIconType::IconName, ElaIcon)
+    ELA_PROPERTY(QString, SuggestText)
+    ELA_PROPERTY(QString, SuggestKey)
+    ELA_PROPERTY(QVariantMap, SuggestData)
 public:
     explicit ElaSuggestion(QObject* parent = nullptr);
     ~ElaSuggestion() override;
@@ -31,9 +32,9 @@ class ElaSuggestBoxSearchViewContainer;
 class ElaSuggestBoxPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaSuggestBox)
-    Q_PROPERTY_CREATE_D(int, BorderRadius)
-    Q_PROPERTY_CREATE_D(Qt::CaseSensitivity, CaseSensitivity)
+    ELA_PIMPL_D(ElaSuggestBox)
+    ELA_PROPERTY_D(int, BorderRadius)
+    ELA_PROPERTY_D(Qt::CaseSensitivity, CaseSensitivity)
 public:
     explicit ElaSuggestBoxPrivate(QObject* parent = nullptr);
     ~ElaSuggestBoxPrivate() override;
@@ -55,9 +56,10 @@ private:
     QSize _lastSize;
     bool _isExpandAnimationFinished{true};
     bool _isCloseAnimationFinished{true};
-    void _startSizeAnimation(const QSize& oldSize, const QSize& newSize);
+    void _startSizeAnimation(QSize oldSize, QSize newSize);
     void _startExpandAnimation();
     void _startCloseAnimation();
 };
 
-#endif // ELASUGGESTBOXPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELASUGGESTBOXPRIVATE_H_
+

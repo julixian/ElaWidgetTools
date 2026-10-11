@@ -1,9 +1,10 @@
-#ifndef ELACONTENTDIALOGPRIVATE_H
-#define ELACONTENTDIALOGPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELACONTENTDIALOGPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELACONTENTDIALOGPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QObject>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class QVBoxLayout;
 class ElaPushButton;
 class ElaContentDialog;
@@ -12,7 +13,7 @@ class ElaAppBar;
 class ElaContentDialogPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaContentDialog)
+    ELA_PIMPL_D(ElaContentDialog)
 public:
     explicit ElaContentDialogPrivate(QObject* parent = nullptr);
     ~ElaContentDialogPrivate() override;
@@ -35,4 +36,5 @@ private:
     void _moveToCenter();
 };
 
-#endif // ELACONTENTDIALOGPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELACONTENTDIALOGPRIVATE_H_
+

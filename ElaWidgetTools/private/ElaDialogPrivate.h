@@ -1,15 +1,16 @@
-#ifndef ELAFRAMEWORK_ELADIALOGPRIVATE_H
-#define ELAFRAMEWORK_ELADIALOGPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELADIALOGPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELADIALOGPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QObject>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaAppBar;
 class ElaDialog;
 class ElaDialogPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaDialog)
+    ELA_PIMPL_D(ElaDialog)
 public:
     explicit ElaDialogPrivate(QObject* parent = nullptr);
     ~ElaDialogPrivate() override;
@@ -20,4 +21,5 @@ private:
     ElaAppBar* _appBar{nullptr};
 };
 
-#endif //ELAFRAMEWORK_ELADIALOGPRIVATE_H
+#endif //ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELADIALOGPRIVATE_H_
+

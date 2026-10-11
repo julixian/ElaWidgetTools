@@ -1,21 +1,22 @@
-#ifndef ELAMESSAGEBUTTONPRIVATE_H
-#define ELAMESSAGEBUTTONPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAMESSAGEBUTTONPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAMESSAGEBUTTONPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QObject>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaMessageButton;
 class ElaMessageButtonPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaMessageButton)
-    Q_PROPERTY_CREATE_D(int, BorderRadius)
-    Q_PROPERTY_CREATE_D(QString, BarTitle);
-    Q_PROPERTY_CREATE_D(QString, BarText);
-    Q_PROPERTY_CREATE_D(int, DisplayMsec);
-    Q_PROPERTY_CREATE_D(QWidget*, MessageTargetWidget)
-    Q_PROPERTY_CREATE_D(ElaMessageBarType::MessageMode, MessageMode);
-    Q_PROPERTY_CREATE_D(ElaMessageBarType::PositionPolicy, PositionPolicy);
+    ELA_PIMPL_D(ElaMessageButton)
+    ELA_PROPERTY_D(int, BorderRadius)
+    ELA_PROPERTY_D(QString, BarTitle);
+    ELA_PROPERTY_D(QString, BarText);
+    ELA_PROPERTY_D(int, DisplayMsec);
+    ELA_PROPERTY_D(QWidget*, MessageTargetWidget)
+    ELA_PROPERTY_D(ElaMessageBarType::MessageMode, MessageMode);
+    ELA_PROPERTY_D(ElaMessageBarType::PositionPolicy, PositionPolicy);
 
 public:
     explicit ElaMessageButtonPrivate(QObject* parent = nullptr);
@@ -28,4 +29,5 @@ private:
     ElaThemeType::ThemeMode _themeMode;
 };
 
-#endif // ELAMESSAGEBUTTONPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAMESSAGEBUTTONPRIVATE_H_
+

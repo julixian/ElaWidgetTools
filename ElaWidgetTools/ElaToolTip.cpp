@@ -6,10 +6,10 @@
 #include "ElaText.h"
 #include "ElaTheme.h"
 #include "ElaToolTipPrivate.h"
-Q_PROPERTY_CREATE_Q_CPP(ElaToolTip, int, BorderRadius)
-Q_PROPERTY_CREATE_Q_CPP(ElaToolTip, int, DisplayMsec)
-Q_PROPERTY_CREATE_Q_CPP(ElaToolTip, int, ShowDelayMsec)
-Q_PROPERTY_CREATE_Q_CPP(ElaToolTip, int, HideDelayMsec)
+ELA_PROPERTY_Q_CPP(ElaToolTip, int, BorderRadius)
+ELA_PROPERTY_Q_CPP(ElaToolTip, int, DisplayMsec)
+ELA_PROPERTY_Q_CPP(ElaToolTip, int, ShowDelayMsec)
+ELA_PROPERTY_Q_CPP(ElaToolTip, int, HideDelayMsec)
 ElaToolTip::ElaToolTip(QWidget* parent)
     : QWidget{parent}, d_ptr(new ElaToolTipPrivate())
 {
@@ -51,8 +51,9 @@ ElaToolTip::~ElaToolTip()
 void ElaToolTip::setToolTip(QString toolTip)
 {
     Q_D(ElaToolTip);
-    resize(fontMetrics().horizontalAdvance(toolTip), height());
-    d->_toolTipText->setText(toolTip);
+    const QString tempToolTip = std::move(toolTip);
+    resize(fontMetrics().horizontalAdvance(tempToolTip), height());
+    d->_toolTipText->setText(tempToolTip);
     Q_EMIT pToolTipChanged();
 }
 

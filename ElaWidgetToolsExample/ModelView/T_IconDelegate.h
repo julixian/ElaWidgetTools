@@ -1,9 +1,9 @@
-﻿#ifndef T_ICONDELEGATE_H
-#define T_ICONDELEGATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLSEXAMPLE_MODELVIEW_T_ICONDELEGATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLSEXAMPLE_MODELVIEW_T_ICONDELEGATE_H_
 
 #include <QStyledItemDelegate>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class T_IconDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
@@ -19,4 +19,6 @@ private:
     ElaThemeType::ThemeMode _themeMode;
 };
 
-#endif // T_ICONDELEGATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLSEXAMPLE_MODELVIEW_T_ICONDELEGATE_H_
+
+

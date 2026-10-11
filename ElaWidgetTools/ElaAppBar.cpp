@@ -21,14 +21,14 @@
 #include <QTimer>
 #include <QVBoxLayout>
 
-#include "ElaDef.h"
 #include "ElaEventBus.h"
 #include "ElaIconButton.h"
 #include "ElaTheme.h"
+#include "ElaWidgetToolsDef.h"
 #include "private/ElaAppBarPrivate.h"
-Q_PROPERTY_CREATE_Q_CPP(ElaAppBar, bool, IsStayTop)
-Q_PROPERTY_CREATE_Q_CPP(ElaAppBar, bool, IsDefaultClosed)
-Q_PROPERTY_CREATE_Q_CPP(ElaAppBar, bool, IsOnlyAllowMinAndClose)
+ELA_PROPERTY_Q_CPP(ElaAppBar, bool, IsStayTop)
+ELA_PROPERTY_Q_CPP(ElaAppBar, bool, IsDefaultClosed)
+ELA_PROPERTY_Q_CPP(ElaAppBar, bool, IsOnlyAllowMinAndClose)
 
 ElaAppBar::ElaAppBar(QWidget* parent)
     : QWidget{parent}, d_ptr(new ElaAppBarPrivate())
@@ -37,6 +37,7 @@ ElaAppBar::ElaAppBar(QWidget* parent)
     d->_buttonFlags = ElaAppBarType::RouteBackButtonHint | ElaAppBarType::RouteForwardButtonHint | ElaAppBarType::StayTopButtonHint | ElaAppBarType::ThemeChangeButtonHint | ElaAppBarType::MinimizeButtonHint | ElaAppBarType::MaximizeButtonHint | ElaAppBarType::CloseButtonHint;
     window()->setAttribute(Qt::WA_Mapped);
     d->_pAppBarHeight = 45;
+    d->_pRibbonHeight = 0;
     setFixedHeight(d->_pAppBarHeight);
     window()->setContentsMargins(0, this->height(), 0, 0);
     d->q_ptr = this;
@@ -61,6 +62,7 @@ ElaAppBar::ElaAppBar(QWidget* parent)
     setObjectName("ElaAppBar");
     setStyleSheet("#ElaAppBar{background-color:transparent;}");
     d->_routeBackButton = new ElaToolButton(this);
+    d->_routeBackButton->setBorderRadius(0);
     d->_routeBackButton->setElaIcon(ElaIconType::ArrowLeft);
     d->_routeBackButton->setFixedSize(35, 30);
     d->_routeBackButton->setEnabled(false);
@@ -68,6 +70,7 @@ ElaAppBar::ElaAppBar(QWidget* parent)
     connect(d->_routeBackButton, &ElaIconButton::clicked, this, &ElaAppBar::routeBackButtonClicked);
 
     d->_routeForwardButton = new ElaToolButton(this);
+    d->_routeForwardButton->setBorderRadius(0);
     d->_routeForwardButton->setElaIcon(ElaIconType::ArrowRight);
     d->_routeForwardButton->setFixedSize(35, 30);
     d->_routeForwardButton->setEnabled(false);
@@ -75,6 +78,7 @@ ElaAppBar::ElaAppBar(QWidget* parent)
 
     // 导航栏展开按钮
     d->_navigationButton = new ElaToolButton(this);
+    d->_navigationButton->setBorderRadius(0);
     d->_navigationButton->setElaIcon(ElaIconType::Bars);
     d->_navigationButton->setFixedSize(40, 30);
     d->_navigationButton->setObjectName("NavigationButton");
@@ -84,6 +88,7 @@ ElaAppBar::ElaAppBar(QWidget* parent)
 
     // 设置置顶
     d->_stayTopButton = new ElaToolButton(this);
+    d->_stayTopButton->setBorderRadius(0);
     d->_stayTopButton->setElaIcon(ElaIconType::Thumbtack, 45);
     d->_stayTopButton->setFixedSize(40, 30);
     connect(d->_stayTopButton, &ElaToolButton::clicked, this, [=]() {
@@ -131,6 +136,7 @@ ElaAppBar::ElaAppBar(QWidget* parent)
 
     // 主题变更
     d->_themeChangeButton = new ElaToolButton(this);
+    d->_themeChangeButton->setBorderRadius(0);
     d->_themeChangeButton->setElaIcon(ElaIconType::MoonStars);
     d->_themeChangeButton->setFixedSize(40, 30);
     connect(d->_themeChangeButton, &ElaToolButton::clicked, this, &ElaAppBar::themeChangeButtonClicked);
@@ -139,10 +145,12 @@ ElaAppBar::ElaAppBar(QWidget* parent)
     });
 
     d->_minButton = new ElaToolButton(this);
+    d->_minButton->setBorderRadius(0);
     d->_minButton->setElaIcon(ElaIconType::Dash);
     d->_minButton->setFixedSize(40, 30);
     connect(d->_minButton, &ElaToolButton::clicked, d, &ElaAppBarPrivate::onMinButtonClicked);
     d->_maxButton = new ElaToolButton(this);
+    d->_maxButton->setBorderRadius(0);
     d->_maxButton->setIconSize(QSize(18, 18));
     d->_maxButton->setElaIcon(ElaIconType::Square);
     d->_maxButton->setFixedSize(40, 30);
@@ -239,7 +247,7 @@ void ElaAppBar::setAppBarHeight(int height)
     Q_D(ElaAppBar);
     d->_pAppBarHeight = height;
     setFixedHeight(d->_pAppBarHeight);
-    window()->setContentsMargins(0, this->height(), 0, 0);
+    window()->setContentsMargins(0, d->_pAppBarHeight + d->_pRibbonHeight, 0, 0);
     Q_EMIT pAppBarHeightChanged();
 }
 
@@ -247,6 +255,20 @@ int ElaAppBar::getAppBarHeight() const
 {
     Q_D(const ElaAppBar);
     return d->_pAppBarHeight;
+}
+
+void ElaAppBar::setRibbonHeight(int height)
+{
+    Q_D(ElaAppBar);
+    d->_pRibbonHeight = height;
+    window()->setContentsMargins(0, d->_pAppBarHeight + d->_pRibbonHeight, 0, 0);
+    Q_EMIT pAppBarHeightChanged();
+}
+
+int ElaAppBar::getRibbonHeight() const
+{
+    Q_D(const ElaAppBar);
+    return d->_pRibbonHeight;
 }
 
 void ElaAppBar::setCustomWidget(ElaAppBarType::CustomArea customArea, QWidget* widget, QObject* hitTestObject, const QString& hitTestFunctionName)
@@ -482,12 +504,12 @@ int ElaAppBar::takeOverNativeEvent(const QByteArray& eventType, void* message, l
         if (::IsZoomed(hwnd))
         {
             this->move(7, 7);
-            window()->setContentsMargins(8, 8 + height(), 8, 8);
+            window()->setContentsMargins(8, 8 + height() + d->_pRibbonHeight, 8, 8);
         }
         else
         {
             this->move(0, 0);
-            window()->setContentsMargins(0, height(), 0, 0);
+            window()->setContentsMargins(0, height() + d->_pRibbonHeight, 0, 0);
         }
         *result = 0;
         return 1;

@@ -1,13 +1,14 @@
-#ifndef ELARADIOBUTTONPRIVATE_H
-#define ELARADIOBUTTONPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELARADIOBUTTONPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELARADIOBUTTONPRIVATE_H_
+#include "ElaPropertyMacro.h"
 #include <QObject>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaRadioButton;
 class ElaRadioButtonPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaRadioButton)
+    ELA_PIMPL_D(ElaRadioButton)
 public:
     explicit ElaRadioButtonPrivate(QObject* parent = nullptr);
     ~ElaRadioButtonPrivate() override;
@@ -17,4 +18,5 @@ private:
     ElaThemeType::ThemeMode _themeMode;
 };
 
-#endif // ELARADIOBUTTONPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELARADIOBUTTONPRIVATE_H_
+

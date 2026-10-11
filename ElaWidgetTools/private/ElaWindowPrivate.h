@@ -1,7 +1,8 @@
-#ifndef ELAWINDOWPRIVATE_H
-#define ELAWINDOWPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAWINDOWPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAWINDOWPRIVATE_H_
 
-#include "ElaDef.h"
+#include "ElaPropertyMacro.h"
+#include "ElaWidgetToolsDef.h"
 #include <QLinearGradient>
 #include <QMap>
 #include <QMovie>
@@ -18,11 +19,11 @@ class ElaThemeAnimationWidget;
 class ElaWindowPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaWindow)
-    Q_PROPERTY_CREATE_D(int, ThemeChangeTime)
-    Q_PROPERTY_CREATE_D(ElaNavigationType::NavigationDisplayMode, NavigationBarDisplayMode)
-    Q_PROPERTY_CREATE_D(ElaWindowType::StackSwitchMode, StackSwitchMode)
-    Q_PROPERTY_CREATE_D(ElaWindowType::PaintMode, WindowPaintMode)
+    ELA_PIMPL_D(ElaWindow)
+    ELA_PROPERTY_D(int, ThemeChangeTime)
+    ELA_PROPERTY_D(ElaNavigationType::NavigationDisplayMode, NavigationBarDisplayMode)
+    ELA_PROPERTY_D(ElaWindowType::StackSwitchMode, StackSwitchMode)
+    ELA_PROPERTY_D(ElaWindowType::PaintMode, WindowPaintMode)
 public:
     explicit ElaWindowPrivate(QObject* parent = nullptr);
     ~ElaWindowPrivate() override;
@@ -64,9 +65,10 @@ private:
     QMap<QString, const QMetaObject*> _pageMetaMap;
     QMap<QString, QWidget*> _routeMap; // key__nodeKey title可以一致  value__Page
     int _navigationTargetIndex{0};
-    qreal _distance(const QPoint& point1, const QPoint& point2);
+    qreal _distance(QPoint point1, QPoint point2);
     void _resetWindowLayout(bool isAnimation);
     void _doNavigationDisplayModeChange();
 };
 
-#endif // ELAWINDOWPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAWINDOWPRIVATE_H_
+

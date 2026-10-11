@@ -1,18 +1,19 @@
-#ifndef ELASCROLLBAR_H
-#define ELASCROLLBAR_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELASCROLLBAR_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELASCROLLBAR_H_
 
 #include <QAbstractScrollArea>
 #include <QScrollBar>
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 
 class ElaScrollBarPrivate;
 class ELA_EXPORT ElaScrollBar : public QScrollBar
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaScrollBar)
-    Q_PROPERTY_CREATE_Q_H(bool, IsAnimation)
-    Q_PROPERTY_CREATE_Q_H(qreal, SpeedLimit)
+    ELA_PIMPL_Q(ElaScrollBar)
+    ELA_PROPERTY_Q_H(bool, IsAnimation)
+    ELA_PROPERTY_Q_H(qreal, SpeedLimit)
 public:
     explicit ElaScrollBar(QWidget* parent = nullptr);
     explicit ElaScrollBar(Qt::Orientation orientation, QWidget* parent = nullptr);
@@ -32,4 +33,4 @@ protected:
     virtual void contextMenuEvent(QContextMenuEvent* event) override;
 };
 
-#endif // ELASCROLLBAR_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELASCROLLBAR_H_

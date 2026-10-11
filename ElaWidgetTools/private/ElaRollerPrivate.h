@@ -1,7 +1,8 @@
-#ifndef ELAFRAMEWORK_ELAWIDGETTOOLS_PRIVATE_ELAROLLERPRIVATE_H_
-#define ELAFRAMEWORK_ELAWIDGETTOOLS_PRIVATE_ELAROLLERPRIVATE_H_
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAROLLERPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAROLLERPRIVATE_H_
 
-#include "ElaDef.h"
+#include "ElaPropertyMacro.h"
+#include "ElaWidgetToolsDef.h"
 #include <QObject>
 #include <QPoint>
 #include <QRect>
@@ -11,15 +12,15 @@ class QPropertyAnimation;
 class ElaRollerPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaRoller)
-    Q_PROPERTY_CREATE_D(int, BorderRadius)
-    Q_PROPERTY_CREATE(qreal, ScrollOffset)
-    Q_PROPERTY_CREATE_D(QStringList, ItemList)
-    Q_PROPERTY_CREATE_D(int, ItemHeight)
-    Q_PROPERTY_CREATE_D(int, MaxVisibleItems)
-    Q_PROPERTY_CREATE_D(int, CurrentIndex)
-    Q_PROPERTY_CREATE_D(bool, IsContainer)
-    Q_PROPERTY_CREATE_D(bool, IsEnableLoop)
+    ELA_PIMPL_D(ElaRoller)
+    ELA_PROPERTY_D(int, BorderRadius)
+    ELA_PROPERTY(qreal, ScrollOffset)
+    ELA_PROPERTY_D(QStringList, ItemList)
+    ELA_PROPERTY_D(int, ItemHeight)
+    ELA_PROPERTY_D(int, MaxVisibleItems)
+    ELA_PROPERTY_D(int, CurrentIndex)
+    ELA_PROPERTY_D(bool, IsContainer)
+    ELA_PROPERTY_D(bool, IsEnableLoop)
 public:
     explicit ElaRollerPrivate(QObject* parent = nullptr);
     ~ElaRollerPrivate() override;
@@ -40,4 +41,5 @@ private:
     void _scroll(int delta);
 };
 
-#endif //ELAFRAMEWORK_ELAWIDGETTOOLS_PRIVATE_ELAROLLERPRIVATE_H_
+#endif //ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAROLLERPRIVATE_H_
+

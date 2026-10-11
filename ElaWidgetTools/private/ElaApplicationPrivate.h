@@ -1,18 +1,20 @@
-#ifndef ELAAPPLICATIONPRIVATE_H
-#define ELAAPPLICATIONPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAAPPLICATIONPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAAPPLICATIONPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QColor>
 #include <QIcon>
 #include <QObject>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaApplication;
 class ElaApplicationPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaApplication)
-    Q_PROPERTY_CREATE_D(ElaApplicationType::WindowDisplayMode, WindowDisplayMode)
-    Q_PROPERTY_CREATE_D(QString, ElaMicaImagePath)
+    ELA_PIMPL_D(ElaApplication)
+    ELA_PROPERTY_D(ElaApplicationType::WindowDisplayMode, WindowDisplayMode)
+    ELA_PROPERTY_D(QString, ElaMicaImagePath)
+    ELA_PROPERTY_D(int, FontPixelSize)
 
 public:
     explicit ElaApplicationPrivate(QObject* parent = nullptr);
@@ -37,4 +39,4 @@ private:
     void _resetAllMicaWidget();
 };
 
-#endif // ELAAPPLICATIONPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAAPPLICATIONPRIVATE_H_

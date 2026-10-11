@@ -1,15 +1,16 @@
-#ifndef ELAFRAMEWORK_ELAROLLERPICKER_H
-#define ELAFRAMEWORK_ELAROLLERPICKER_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELAROLLERPICKER_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELAROLLERPICKER_H_
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 #include <QPushButton>
 
 class ElaRollerPickerPrivate;
 class ELA_EXPORT ElaRollerPicker : public QPushButton
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaRollerPicker)
-    Q_PROPERTY_CREATE_Q_H(int, BorderRadius)
+    ELA_PIMPL_Q(ElaRollerPicker)
+    ELA_PROPERTY_Q_H(int, BorderRadius)
 public:
     explicit ElaRollerPicker(QWidget* parent = nullptr);
     ~ElaRollerPicker() override;
@@ -38,4 +39,4 @@ protected:
     virtual void paintEvent(QPaintEvent* event) override;
 };
 
-#endif //ELAFRAMEWORK_ELAROLLERPICKER_H
+#endif //ELAWORKSPACE_ELAWIDGETTOOLS_ELAROLLERPICKER_H_

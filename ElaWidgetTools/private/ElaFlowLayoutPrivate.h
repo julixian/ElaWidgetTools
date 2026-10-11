@@ -1,17 +1,18 @@
-#ifndef ELAFLOWLAYOUTPRIVATE_H
-#define ELAFLOWLAYOUTPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAFLOWLAYOUTPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAFLOWLAYOUTPRIVATE_H_
 
 #include <QLayout>
 #include <QMap>
 #include <QObject>
 #include <QStyle>
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 class ElaFlowLayout;
 class ElaFlowLayoutPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaFlowLayout)
+    ELA_PIMPL_D(ElaFlowLayout)
 public:
     explicit ElaFlowLayoutPrivate(QObject* parent = nullptr);
     ~ElaFlowLayoutPrivate() override;
@@ -26,4 +27,5 @@ private:
     int _vSpacing;
 };
 
-#endif // ELAFLOWLAYOUTPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAFLOWLAYOUTPRIVATE_H_
+

@@ -1,14 +1,15 @@
-#ifndef ELADOCKWIDGET_H
-#define ELADOCKWIDGET_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELADOCKWIDGET_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELADOCKWIDGET_H_
 
 #include <QDockWidget>
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 class ElaDockWidgetPrivate;
 class ELA_EXPORT ElaDockWidget : public QDockWidget
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaDockWidget)
+    ELA_PIMPL_Q(ElaDockWidget)
 public:
     explicit ElaDockWidget(QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
     explicit ElaDockWidget(const QString& title, QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
@@ -26,4 +27,4 @@ protected:
 #endif
 };
 
-#endif // ELADOCKWIDGET_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELADOCKWIDGET_H_

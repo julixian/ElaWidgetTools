@@ -1,16 +1,17 @@
-#ifndef ELACOMBOBOX_H
-#define ELACOMBOBOX_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELACOMBOBOX_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELACOMBOBOX_H_
 
 #include <QComboBox>
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 
 class ElaComboBoxPrivate;
 class ELA_EXPORT ElaComboBox : public QComboBox
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaComboBox);
-    Q_PROPERTY_CREATE_Q_H(int, BorderRadius)
+    ELA_PIMPL_Q(ElaComboBox);
+    ELA_PROPERTY_Q_H(int, BorderRadius)
 public:
     explicit ElaComboBox(QWidget* parent = nullptr);
     ~ElaComboBox() override;
@@ -23,4 +24,4 @@ protected:
     virtual void paintEvent(QPaintEvent* event) override;
 };
 
-#endif // ELACOMBOBOX_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELACOMBOBOX_H_

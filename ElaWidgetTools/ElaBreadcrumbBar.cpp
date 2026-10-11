@@ -4,11 +4,11 @@
 #include <QScroller>
 #include <QVBoxLayout>
 
-#include "DeveloperComponents/ElaBreadcrumbBarDelegate.h"
-#include "DeveloperComponents/ElaBreadcrumbBarModel.h"
 #include "ElaBaseListView.h"
+#include "ElaBreadcrumbBarDelegate.h"
+#include "ElaBreadcrumbBarModel.h"
 #include "ElaBreadcrumbBarPrivate.h"
-Q_PROPERTY_CREATE_Q_CPP(ElaBreadcrumbBar, bool, IsAutoRemove);
+ELA_PROPERTY_Q_CPP(ElaBreadcrumbBar, bool, IsAutoRemove);
 ElaBreadcrumbBar::ElaBreadcrumbBar(QWidget* parent)
     : QWidget{parent}, d_ptr(new ElaBreadcrumbBarPrivate())
 {
@@ -108,14 +108,14 @@ void ElaBreadcrumbBar::setBreadcrumbList(const QStringList& breadcrumbList)
     d->_listModel->setBreadcrumbList(breadcrumbList);
 }
 
-QStringList ElaBreadcrumbBar::appendBreadcrumb(const QString& breadcrumb)
+QStringList ElaBreadcrumbBar::appendBreadcrumb(QString breadcrumb)
 {
     Q_D(ElaBreadcrumbBar);
     d->_listModel->appendBreadcrumb(breadcrumb);
     return d->_listModel->getBreadcrumbList();
 }
 
-QStringList ElaBreadcrumbBar::removeBreadcrumb(const QString& breadcrumb)
+QStringList ElaBreadcrumbBar::removeBreadcrumb(QString breadcrumb)
 {
     Q_D(ElaBreadcrumbBar);
     d->_listModel->removeBreadcrumb(breadcrumb);
@@ -128,7 +128,7 @@ int ElaBreadcrumbBar::getBreadcrumbListCount() const
     return d->_listModel->getBreadcrumbListCount();
 }
 
-QStringList ElaBreadcrumbBar::getBreadcrumbList() const
+const QStringList& ElaBreadcrumbBar::getBreadcrumbList() const
 {
     Q_D(const ElaBreadcrumbBar);
     return d->_listModel->getBreadcrumbList();

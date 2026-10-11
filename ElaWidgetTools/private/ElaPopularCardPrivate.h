@@ -1,27 +1,28 @@
-#ifndef ELAPOPULARCARDPRIVATE_H
-#define ELAPOPULARCARDPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPOPULARCARDPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPOPULARCARDPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QObject>
 #include <QPixmap>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaPopularCard;
 class ElaPopularCardFloater;
 class ElaPopularCardPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaPopularCard)
-    Q_PROPERTY_CREATE_D(int, BorderRadius)
-    Q_PROPERTY_CREATE_D(QPixmap, CardPixmap)
-    Q_PROPERTY_CREATE_D(QString, Title)
-    Q_PROPERTY_CREATE_D(QString, SubTitle)
-    Q_PROPERTY_CREATE_D(QString, InteractiveTips)
-    Q_PROPERTY_CREATE_D(QString, DetailedText)
-    Q_PROPERTY_CREATE_D(QString, CardButtonText)
-    Q_PROPERTY_CREATE_D(QWidget*, CardFloatArea)
-    Q_PROPERTY_CREATE_D(QPixmap, CardFloatPixmap)
-    Q_PROPERTY_CREATE(qreal, HoverYOffset);
-    Q_PROPERTY_CREATE(qreal, HoverOpacity);
+    ELA_PIMPL_D(ElaPopularCard)
+    ELA_PROPERTY_D(int, BorderRadius)
+    ELA_PROPERTY_D(QPixmap, CardPixmap)
+    ELA_PROPERTY_D(QString, Title)
+    ELA_PROPERTY_D(QString, SubTitle)
+    ELA_PROPERTY_D(QString, InteractiveTips)
+    ELA_PROPERTY_D(QString, DetailedText)
+    ELA_PROPERTY_D(QString, CardButtonText)
+    ELA_PROPERTY_D(QWidget*, CardFloatArea)
+    ELA_PROPERTY_D(QPixmap, CardFloatPixmap)
+    ELA_PROPERTY(qreal, HoverYOffset);
+    ELA_PROPERTY(qreal, HoverOpacity);
 
 public:
     explicit ElaPopularCardPrivate(QObject* parent = nullptr);
@@ -42,4 +43,5 @@ private:
     void _showFloater();
 };
 
-#endif // ELAPOPULARCARDPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPOPULARCARDPRIVATE_H_
+

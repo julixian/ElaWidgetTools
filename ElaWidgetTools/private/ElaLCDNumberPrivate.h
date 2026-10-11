@@ -1,7 +1,8 @@
-#ifndef ELAWIDGETTOOLS_ELALCDNUMBERPRIVATE_H
-#define ELAWIDGETTOOLS_ELALCDNUMBERPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELALCDNUMBERPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELALCDNUMBERPRIVATE_H_
 
-#include "ElaDef.h"
+#include "ElaPropertyMacro.h"
+#include "ElaWidgetToolsDef.h"
 
 #include <QObject>
 class QTimer;
@@ -10,9 +11,9 @@ class ElaLCDNumberStyle;
 class ElaLCDNumberPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaLCDNumber)
-    Q_PROPERTY_CREATE_D(bool, IsUseAutoClock)
-    Q_PROPERTY_CREATE_D(QString, AutoClockFormat)
+    ELA_PIMPL_D(ElaLCDNumber)
+    ELA_PROPERTY_D(bool, IsUseAutoClock)
+    ELA_PROPERTY_D(QString, AutoClockFormat)
 public:
     explicit ElaLCDNumberPrivate(QObject* parent = nullptr);
     ~ElaLCDNumberPrivate() override;
@@ -25,4 +26,5 @@ private:
     ElaLCDNumberStyle* _lcdNumberStyle{nullptr};
 };
 
-#endif //ELAWIDGETTOOLS_ELALCDNUMBERPRIVATE_H
+#endif //ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELALCDNUMBERPRIVATE_H_
+

@@ -1,17 +1,18 @@
-#ifndef ELALOGPRIVATE_H
-#define ELALOGPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELALOGPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELALOGPRIVATE_H_
 
 #include <QObject>
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 class ElaLog;
 class ElaLogPrivate : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY_CREATE_D(QString, LogSavePath)
-    Q_PROPERTY_CREATE_D(QString, LogFileName)
-    Q_PROPERTY_CREATE_D(bool, IsLogFileNameWithTime)
-    Q_D_CREATE(ElaLog)
+    ELA_PROPERTY_D(QString, LogSavePath)
+    ELA_PROPERTY_D(QString, LogFileName)
+    ELA_PROPERTY_D(bool, IsLogFileNameWithTime)
+    ELA_PIMPL_D(ElaLog)
 public:
     explicit ElaLogPrivate(QObject* parent = nullptr);
     ~ElaLogPrivate();
@@ -21,4 +22,5 @@ private:
     void _clearLogFile();
 };
 
-#endif // ELALOGPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELALOGPRIVATE_H_
+

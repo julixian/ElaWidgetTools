@@ -92,7 +92,7 @@ void ElaAppBarPrivate::_changeMaxButtonAwesome(bool isMaximized)
     }
 }
 
-void ElaAppBarPrivate::_showAppBarMenu(const QPoint& point)
+void ElaAppBarPrivate::_showAppBarMenu(QPoint point)
 {
     Q_Q(const ElaAppBar);
     if (_pCustomMenu)

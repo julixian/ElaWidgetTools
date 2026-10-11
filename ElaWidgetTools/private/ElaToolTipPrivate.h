@@ -1,23 +1,24 @@
-#ifndef ELATOOLTIPPRIVATE_H
-#define ELATOOLTIPPRIVATE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELATOOLTIPPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELATOOLTIPPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QObject>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaToolTip;
 class QVBoxLayout;
 class ElaText;
 class ElaToolTipPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaToolTip)
-    Q_PROPERTY_CREATE_D(int, BorderRadius)
-    Q_PROPERTY_CREATE_D(int, DisplayMsec)
-    Q_PROPERTY_CREATE_D(int, ShowDelayMsec)
-    Q_PROPERTY_CREATE_D(int, HideDelayMsec)
-    Q_PROPERTY_CREATE_D(QString, ToolTip)
-    Q_PROPERTY_CREATE_D(QWidget*, CustomWidget)
-    Q_PROPERTY_CREATE(qreal, Opacity)
+    ELA_PIMPL_D(ElaToolTip)
+    ELA_PROPERTY_D(int, BorderRadius)
+    ELA_PROPERTY_D(int, DisplayMsec)
+    ELA_PROPERTY_D(int, ShowDelayMsec)
+    ELA_PROPERTY_D(int, HideDelayMsec)
+    ELA_PROPERTY_D(QString, ToolTip)
+    ELA_PROPERTY_D(QWidget*, CustomWidget)
+    ELA_PROPERTY(qreal, Opacity)
 
 public:
     explicit ElaToolTipPrivate(QObject* parent = nullptr);
@@ -35,4 +36,5 @@ private:
     void _updatePos();
 };
 
-#endif // ELATOOLTIPPRIVATE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELATOOLTIPPRIVATE_H_
+

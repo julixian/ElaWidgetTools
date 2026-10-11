@@ -1,28 +1,29 @@
-#ifndef ELAFRAMEWORK_ELAWIDGETTOOLS_PRIVATE_ELAPROGRESSRINGPRIVATE_H_
-#define ELAFRAMEWORK_ELAWIDGETTOOLS_PRIVATE_ELAPROGRESSRINGPRIVATE_H_
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPROGRESSRINGPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPROGRESSRINGPRIVATE_H_
 
+#include "ElaPropertyMacro.h"
 #include <QObject>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaProgressRing;
 class QPropertyAnimation;
 class ElaProgressRingPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaProgressRing);
-    Q_PROPERTY_CREATE_D(bool, IsBusying)
-    Q_PROPERTY_CREATE_D(bool, IsTransparent)
-    Q_PROPERTY_CREATE_D(bool, IsDisplayValue)
-    Q_PROPERTY_CREATE_D(ElaProgressRingType::ValueDisplayMode, ValueDisplayMode)
-    Q_PROPERTY_CREATE_D(int, BusyingWidth)
-    Q_PROPERTY_CREATE_D(int, BusyingDurationTime)
-    Q_PROPERTY_CREATE_D(int, Minimum)
-    Q_PROPERTY_CREATE_D(int, Maximum)
-    Q_PROPERTY_CREATE_D(int, Value)
-    Q_PROPERTY_CREATE_D(int, ValuePixelSize)
-    Q_PROPERTY_CREATE(int, BusyIndex)
-    Q_PROPERTY_CREATE(int, BusyStartDeg)
-    Q_PROPERTY_CREATE(int, BusyContentDeg)
+    ELA_PIMPL_D(ElaProgressRing);
+    ELA_PROPERTY_D(bool, IsBusying)
+    ELA_PROPERTY_D(bool, IsTransparent)
+    ELA_PROPERTY_D(bool, IsDisplayValue)
+    ELA_PROPERTY_D(ElaProgressRingType::ValueDisplayMode, ValueDisplayMode)
+    ELA_PROPERTY_D(int, BusyingWidth)
+    ELA_PROPERTY_D(int, BusyingDurationTime)
+    ELA_PROPERTY_D(int, Minimum)
+    ELA_PROPERTY_D(int, Maximum)
+    ELA_PROPERTY_D(int, Value)
+    ELA_PROPERTY_D(int, ValuePixelSize)
+    ELA_PROPERTY(int, BusyIndex)
+    ELA_PROPERTY(int, BusyStartDeg)
+    ELA_PROPERTY(int, BusyContentDeg)
 public:
     explicit ElaProgressRingPrivate(QObject* parent = nullptr);
     ~ElaProgressRingPrivate() override;
@@ -33,4 +34,5 @@ private:
     QPropertyAnimation* _busyContentDegAnimation{nullptr};
 };
 
-#endif //ELAFRAMEWORK_ELAWIDGETTOOLS_PRIVATE_ELAPROGRESSRINGPRIVATE_H_
+#endif //ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAPROGRESSRINGPRIVATE_H_
+

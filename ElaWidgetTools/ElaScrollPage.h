@@ -1,9 +1,10 @@
-#ifndef ELASCROLLPAGE_H
-#define ELASCROLLPAGE_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELASCROLLPAGE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELASCROLLPAGE_H_
 
 #include <QWidget>
 
-#include "ElaProperty.h"
+#include "ElaPropertyMacro.h"
+#include "ElaWidgetToolsExport.h"
 class ElaScrollArea;
 class ElaText;
 class QHBoxLayout;
@@ -11,19 +12,28 @@ class ElaScrollPagePrivate;
 class ELA_EXPORT ElaScrollPage : public QWidget
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaScrollPage)
-    Q_PROPERTY_CREATE_Q_H(QWidget*, CustomWidget)
+    ELA_PIMPL_Q(ElaScrollPage)
+
 public:
     explicit ElaScrollPage(QWidget* parent = nullptr);
     ~ElaScrollPage() override;
 
-    void addCentralWidget(QWidget* centralWidget, bool isWidgetResizeable = true, bool isVerticalGrabGesture = true, qreal mousePressEventDelay = 0.5);
+    void setTopCustomWidget(QWidget* customWidget);
+    QWidget* getTopCustomWidget() const;
+
+    void setBottomCustomWidget(QWidget* customWidget);
+    QWidget* getBottomCustomWidget() const;
+
+    void addCentralWidget(QWidget* centralWidget, bool isWidgetResizeable = true, bool isVerticalGrabGesture = true, qreal mousePressEventDelay = 0.0);
 
     void navigation(int widgetIndex, bool isLogRoute = true);
 
     void setPageTitleSpacing(int spacing);
     int getPageTitleSpacing() const;
     void setTitleVisible(bool isVisible);
+
+    void setPageTitlePixelSize(int pixelSize);
+    int getPageTitlePixelSize() const;
 };
 
-#endif // ELASCROLLPAGE_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELASCROLLPAGE_H_

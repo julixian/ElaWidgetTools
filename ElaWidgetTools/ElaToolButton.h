@@ -1,21 +1,24 @@
-#ifndef ELATOOLBUTTON_H
-#define ELATOOLBUTTON_H
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELATOOLBUTTON_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELATOOLBUTTON_H_
 
+#include "ElaPropertyMacro.h"
 #include <QToolButton>
 
-#include "ElaDef.h"
+#include "ElaWidgetToolsDef.h"
 class ElaMenu;
 class ElaToolButtonPrivate;
 class ELA_EXPORT ElaToolButton : public QToolButton
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaToolButton)
-    Q_PROPERTY_CREATE_Q_H(int, BorderRadius);
-    Q_PROPERTY_CREATE_Q_H(bool, IsSelected);
-
+    ELA_PIMPL_Q(ElaToolButton)
 public:
     explicit ElaToolButton(QWidget* parent = nullptr);
     ~ElaToolButton() override;
+
+    void setBorderRadius(int borderRadius);
+    Q_REQUIRED_RESULT int getBorderRadius() const;
+    void setIsSelected(bool isSelected);
+    Q_REQUIRED_RESULT bool getIsSelected() const;
 
     void setIsTransparent(bool isTransparent);
     bool getIsTransparent() const;
@@ -26,6 +29,10 @@ public:
 
 protected:
     virtual bool eventFilter(QObject* watched, QEvent* event) override;
+
+Q_SIGNALS:
+    Q_SIGNAL void pBorderRadiusChanged();
+    Q_SIGNAL void pIsSelectedChanged();
 };
 
-#endif // ELATOOLBUTTON_H
+#endif // ELAWORKSPACE_ELAWIDGETTOOLS_ELATOOLBUTTON_H_

@@ -1,19 +1,23 @@
-#ifndef ELAFRAMEWORK_ELAWIDGETTOOLS_INCLUDE_ELADRAWERAREA_H_
-#define ELAFRAMEWORK_ELAWIDGETTOOLS_INCLUDE_ELADRAWERAREA_H_
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_ELADRAWERAREA_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_ELADRAWERAREA_H_
 
-#include "ElaProperty.h"
+#include "ElaWidgetToolsExport.h"
+#include "ElaPropertyMacro.h"
 #include <QWidget>
 
 class ElaDrawerAreaPrivate;
 class ELA_EXPORT ElaDrawerArea : public QWidget
 {
     Q_OBJECT
-    Q_Q_CREATE(ElaDrawerArea)
-    Q_PROPERTY_CREATE_Q_H(int, BorderRadius)
-    Q_PROPERTY_CREATE_Q_H(int, HeaderHeight)
+    ELA_PIMPL_Q(ElaDrawerArea)
 public:
     explicit ElaDrawerArea(QWidget* parent = nullptr);
     ~ElaDrawerArea() override;
+
+    void setBorderRadius(int borderRadius);
+    Q_REQUIRED_RESULT int getBorderRadius() const;
+    void setHeaderHeight(int headerHeight);
+    Q_REQUIRED_RESULT int getHeaderHeight() const;
 
     void setDrawerHeader(QWidget* widget);
 
@@ -25,7 +29,9 @@ public:
 
     bool getIsExpand() const;
 Q_SIGNALS:
+    Q_SIGNAL void pBorderRadiusChanged();
+    Q_SIGNAL void pHeaderHeightChanged();
     Q_SIGNAL void expandStateChanged(bool isExpand);
 };
 
-#endif //ELAFRAMEWORK_ELAWIDGETTOOLS_INCLUDE_ELADRAWERAREA_H_
+#endif //ELAWORKSPACE_ELAWIDGETTOOLS_ELADRAWERAREA_H_

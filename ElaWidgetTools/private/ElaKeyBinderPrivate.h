@@ -1,7 +1,8 @@
-#ifndef ELAWIDGETTOOLS_SRC_PRIVATE_ELAKEYBINDERPRIVATE_H_
-#define ELAWIDGETTOOLS_SRC_PRIVATE_ELAKEYBINDERPRIVATE_H_
+#ifndef ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAKEYBINDERPRIVATE_H_
+#define ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAKEYBINDERPRIVATE_H_
 
-#include "ElaDef.h"
+#include "ElaPropertyMacro.h"
+#include "ElaWidgetToolsDef.h"
 #include <QObject>
 class ElaKeyBinder;
 class ElaContentDialog;
@@ -9,8 +10,8 @@ class ElaKeyBinderContainer;
 class ElaKeyBinderPrivate : public QObject
 {
     Q_OBJECT
-    Q_D_CREATE(ElaKeyBinder)
-    Q_PROPERTY_CREATE_D(int, BorderRadius)
+    ELA_PIMPL_D(ElaKeyBinder)
+    ELA_PROPERTY_D(int, BorderRadius)
 public:
     explicit ElaKeyBinderPrivate(QObject* parent = nullptr);
     ~ElaKeyBinderPrivate() override;
@@ -22,4 +23,5 @@ private:
     ElaKeyBinderContainer* _binderContainer{nullptr};
 };
 
-#endif //ELAWIDGETTOOLS_SRC_PRIVATE_ELAKEYBINDERPRIVATE_H_
+#endif //ELAWORKSPACE_ELAWIDGETTOOLS_PRIVATE_ELAKEYBINDERPRIVATE_H_
+
