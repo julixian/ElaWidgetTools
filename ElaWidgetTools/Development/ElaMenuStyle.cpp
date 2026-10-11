@@ -90,7 +90,8 @@ void ElaMenuStyle::drawControl(ControlElement element, const QStyleOption* optio
                 //Icon绘制
                 QIcon menuIcon = mopt->icon;
                 //check绘制
-                if (mopt->menuHasCheckableItems)
+                // 只给当前可勾选项画勾选标记，其余菜单项仍显示各自的图标。
+                if (mopt->checkType != QStyleOptionMenuItem::NotCheckable)
                 {
                     painter->save();
                     painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : _themeMode == ElaThemeType::Light ? Qt::black
