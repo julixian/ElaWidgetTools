@@ -3,7 +3,7 @@ name = "ElaWidgetTools"
 version = "2.0.0"
 
 [build-dependencies]
-mcpp.plugins = { version = "0.18.1", features = ["rules-qt"], host-module = true }
+mcpp.plugins = { version = "0.18.1", features = ["rules-qt"] }
 
 [build]
 default-profile = "release"

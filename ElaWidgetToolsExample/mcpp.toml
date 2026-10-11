@@ -6,7 +6,7 @@ version = "1.0.0"
 ElaWidgetTools = { path = "../ElaWidgetTools", linkage = "shared" }
 
 [build-dependencies]
-mcpp.plugins = { version = "0.18.1", features = ["rules-qt"], host-module = true }
+mcpp.plugins = { version = "0.18.1", features = ["rules-qt"] }
 
 [build]
 default-profile = "release"
